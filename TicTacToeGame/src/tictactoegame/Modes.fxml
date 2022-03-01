@@ -35,12 +35,12 @@
    <center>
       <VBox alignment="CENTER" prefHeight="620.0" prefWidth="550.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #fab54d; -fx-cursor: hand;" text="Two Players" textAlignment="CENTER">
+            <Button mnemonicParsing="false" onAction="#switchToDouble" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #fab54d; -fx-cursor: hand;" text="Two Players" textAlignment="CENTER">
                <VBox.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #93d2db; -fx-cursor: hand;" text="Single Player" textAlignment="CENTER">
+            <Button mnemonicParsing="false" onAction="#switchToSingle" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #93d2db; -fx-cursor: hand;" text="Single Player" textAlignment="CENTER">
                <VBox.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </VBox.margin>

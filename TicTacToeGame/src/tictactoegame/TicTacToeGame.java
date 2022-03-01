@@ -30,7 +30,7 @@ public class TicTacToeGame extends Application {
         //////////
         //resultVideo
         System.out.println("here 111");
-        Parent root = FXMLLoader.load(getClass().getResource("EntryScreenForLocalGame.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("EntryScreenForLocalGame.fxml"));
         System.out.println("here 222");
         Scene scene = new Scene(root);
         System.out.println("here 333");

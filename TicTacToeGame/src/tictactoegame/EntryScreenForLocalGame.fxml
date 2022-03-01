@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoegame.EntryScreenForLocalGameController">
+   <children>
+      <AnchorPane layoutX="386.0" layoutY="-1.0" prefHeight="407.0" prefWidth="214.0" style="-fx-background-color: #fcb740#fcb740 #fcb740#fcb740;">
+         <children>
+            <Label layoutX="27.0" layoutY="47.0" prefHeight="41.0" prefWidth="115.0" style="-fx-background-color: #92d2dc#92d2dc #92d2dc#92d2dc; -fx-alignment: center; -fx-background-radius: 90;" text="Player One Name" />
+            <Label layoutX="27.0" layoutY="154.0" prefHeight="41.0" prefWidth="115.0" style="-fx-background-color: #ef83b5#ef83b5 #ef83b5#ef83b5; -fx-alignment: center; -fx-background-radius: 90;" text="Player Two Name" />
+            <Button fx:id="buttonPlay" layoutX="51.0" layoutY="288.0" mnemonicParsing="false" onAction="#handlePlayButton" prefHeight="41.0" prefWidth="115.0" style="-fx-background-color: #c6da6c#c6da6c #c6da6c#c6da6c; -fx-background-radius: 90; -fx-alignment: center;" text="play" />
+            <TextField fx:id="textFieldPlayer1Name" layoutX="27.0" layoutY="95.0" prefHeight="41.0" prefWidth="160.0" style="-fx-background-radius: 90; -fx-alignment: center;" />
+            <TextField fx:id="textFieldPlayer2Name" layoutX="28.0" layoutY="204.0" prefHeight="41.0" prefWidth="160.0" style="-fx-background-radius: 90; -fx-alignment: center;" />
+         </children>
+      </AnchorPane>
+      <ImageView fx:id="imageLogo" fitHeight="407.0" fitWidth="385.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@logo.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

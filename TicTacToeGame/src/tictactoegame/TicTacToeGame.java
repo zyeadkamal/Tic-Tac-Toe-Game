@@ -19,6 +19,9 @@ public class TicTacToeGame extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
+
+        Parent root = FXMLLoader.load(getClass().getResource("Modes.fxml"));
+
         
         //EntryScreenForLocalGame
         // ResultVideoController

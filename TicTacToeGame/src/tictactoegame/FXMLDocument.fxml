@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoegame.FXMLDocumentController">
-    <children>
-        <Button layoutX="126" layoutY="90" text="Click Me!" onAction="#handleButtonAction" fx:id="button" />
-        <Label layoutX="126" layoutY="120" minHeight="16" minWidth="69" fx:id="label" />
-    </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="474.0" prefWidth="825.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoegame.FXMLDocumentController">
+   <children>
+      <ImageView fitHeight="474.0" fitWidth="477.0" layoutX="57.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../../../../../../../../Downloads/34783754_137280953813964_4222166062734508032_n.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btnx" layoutX="552.0" layoutY="126.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="55.0" prefWidth="197.0" text="Single Mode" />
+      <Button layoutX="551.0" layoutY="212.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="197.0" text="Multi Player" />
+      <Button layoutX="551.0" layoutY="297.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="197.0" text="Online Player" />
+   </children>
 </AnchorPane>

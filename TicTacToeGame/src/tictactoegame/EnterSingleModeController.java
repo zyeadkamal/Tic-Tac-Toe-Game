@@ -11,27 +11,36 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.TextField;
 
 /**
+ * FXML Controller class
  *
  * @author mac
  */
-public class FXMLDocumentController implements Initializable {
+public class EnterSingleModeController implements Initializable {
 
     @FXML
-    private Button btnx;
-    
-    
-    
-   
+    private TextField nameLabel;
+    @FXML
+    private Button backBtn;
+    @FXML
+    private Button playBtn;
+
+    /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
 
     @FXML
-    private void handleButtonAction(ActionEvent event) {
+    private void backBtnPressed(ActionEvent event) {
     }
 
+    @FXML
+    private void playBtnPressed(ActionEvent event) {
+    }
+    
 }

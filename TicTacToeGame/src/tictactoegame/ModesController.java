@@ -37,7 +37,7 @@ public class ModesController implements Initializable {
     }
     
     public void switchToDouble(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("EntryScreenForLocalGame.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("LocalMultiPlayerEntryScreen.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

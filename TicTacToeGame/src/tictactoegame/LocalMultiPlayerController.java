@@ -71,6 +71,8 @@ public class LocalMultiPlayerController extends xoGameLogic implements Initializ
     private Label player1ResultLabel;
     @FXML
     private Label player2ResultLabel;
+    @FXML
+    private Button buttonRestart;
     
     
     
@@ -94,13 +96,38 @@ public class LocalMultiPlayerController extends xoGameLogic implements Initializ
         player2Label.setText(player2);
     }
     
+    @FXML
     public void handleExitButton(ActionEvent event) throws IOException{
         
-        root = FXMLLoader.load(getClass().getResource("EntryScreenForLocalGame.fxml"));
+        root = FXMLLoader.load(getClass().getResource("LocalMultiPlayerEntryScreen.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow() ;
         scene = new Scene(root) ;
         stage.setScene(scene);
         stage.show();
+    }
+    
+    @FXML
+    public void handlingRestartButton(ActionEvent event){
+        
+        button1.setText("");
+        button2.setText("");
+        button3.setText("");
+        button4.setText("");
+        button5.setText("");
+        button6.setText("");
+        button7.setText("");
+        button8.setText("");
+        button9.setText("");
+        
+        button1.setDisable(false);
+        button2.setDisable(false);
+        button3.setDisable(false);
+        button4.setDisable(false);
+        button5.setDisable(false);
+        button6.setDisable(false);
+        button7.setDisable(false);
+        button8.setDisable(false);
+        button9.setDisable(false);
     }
 
 
@@ -214,20 +241,28 @@ public class LocalMultiPlayerController extends xoGameLogic implements Initializ
         button8.setDisable(true);
         button9.setDisable(true);
         
-        FXMLLoader Loader = new FXMLLoader(getClass().getResource("resultVideo.fxml"));
+        //System.out.println("217");
+        FXMLLoader Loader = new FXMLLoader(getClass().getResource("ConclusionVideo.fxml"));
         //Parent root = null;
         try {
+            //System.out.println("221");
             root = Loader.load();
+            //System.out.println("223");
         } catch (IOException ex) {
             Logger.getLogger(LocalMultiPlayerController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        ResultVideoController resultVideoController = Loader.getController();
-        resultVideoController.setWinnerNameLabel(winnerName);
-         
+        //System.out.println("227");
+        ConclusionVideoController conclusionVideoController = Loader.getController();
+        //System.out.println("229");
+        conclusionVideoController.setWinnerNameLabel(winnerName);
+        turnLabel.setText("congraats "+winnerName);
+        //System.out.println("231"); 
         stage = new Stage();
+        //System.out.println("233");
         stage.setScene(new Scene(root));
+        //System.out.println("235");
         stage.show();
+        //System.out.println("237");
 
     }
     

@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,14 +22,13 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 /**
  * FXML Controller class
  *
  * @author amrelshazly
  */
-public class ResultVideoController implements Initializable {
+public class ConclusionVideoController implements Initializable {
     
     File file ;
     Media media ;
@@ -40,13 +38,11 @@ public class ResultVideoController implements Initializable {
     private Parent root ;
 
     @FXML
-    private MediaView videoResult;
-    @FXML
-    private Label labelWinnerName;
+    private MediaView mediaViewConclusion;
     @FXML
     private Button buttonExit;
     @FXML
-    private Button buttonRestart;
+    private Label labelWinner;
 
     /**
      * Initializes the controller class.
@@ -54,40 +50,34 @@ public class ResultVideoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
-        
-        
     }    
     
     public void setWinnerNameLabel(String winnerName){
         
-        labelWinnerName.setText(winnerName + "Wins");
+        labelWinner.setText("Congraats "+winnerName);
+        System.out.println("video 58");
         if (!winnerName.equals("tied")){
-        file = new File("/Users/amrelshazly/Desktop/iti/java course/XO Game/GitHub/TicTacToeGame/src/tictactoegame/winningVideo.mp4") ;
+        file = new File("src/tictactoegame/winningVideo.mp4") ;
+        System.out.println("video 60");
         media = new Media(file.toURI().toString()) ;
+        System.out.println("video 62");
         mediaPlayer = new MediaPlayer(media) ;
-        videoResult.setMediaPlayer(mediaPlayer);
+        System.out.println("video 64");
+        mediaViewConclusion.setMediaPlayer(mediaPlayer);
+        System.out.println("video 66");
         mediaPlayer.play();
+        System.out.println("video 68");
         }
         else{
-        file = new File("/Users/amrelshazly/Desktop/iti/java course/XO Game/GitHub/TicTacToeGame/src/tictactoegame/looser.mp4") ;
+        file = new File("/Users/amrelshazly/Desktop/iti/java course/Tic-Tac-Toe-Game-main/TicTacToeGame/src/tictactoegame/looser.mp4") ;
         media = new Media(file.toURI().toString()) ;
         mediaPlayer = new MediaPlayer(media) ;
-        videoResult.setMediaPlayer(mediaPlayer);
+        mediaViewConclusion.setMediaPlayer(mediaPlayer);
         mediaPlayer.play();
         }
         
     }
     
-    @FXML
-    public void handleRestartButton(ActionEvent event) throws IOException{
-        
-        root = FXMLLoader.load(getClass().getResource("LocalMultiPlayer.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow() ;
-        scene = new Scene(root) ;
-        stage.setScene(scene);
-        stage.show();
-    }
     @FXML
     public void handleExitButton(ActionEvent event) throws IOException{
         
@@ -96,9 +86,11 @@ public class ResultVideoController implements Initializable {
 //        scene = new Scene(root) ;
 //        stage.setScene(scene);
 //        stage.show();
-          
+            System.out.println("video 83");
            stage = (Stage) buttonExit.getScene().getWindow();
            // do what you have to do
+           System.out.println("video 86");
            stage.close();
     }
+    
 }

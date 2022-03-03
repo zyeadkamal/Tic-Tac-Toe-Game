@@ -16,9 +16,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
@@ -26,21 +25,20 @@ import javafx.stage.Stage;
  *
  * @author amrelshazly
  */
-public class EntryScreenForLocalGameController implements Initializable {
+public class LocalMultiPlayerEntryScreenController implements Initializable {
     
     private Stage stage ;
     private Scene scene ;
     private Parent root ;
-    Image myImage ;
 
+    @FXML
+    private TextField textFieldPlayerTwoName;
+    @FXML
+    private TextField textFieldPlayerOneName;
     @FXML
     private Button buttonPlay;
     @FXML
-    private TextField textFieldPlayer1Name;
-    @FXML
-    private TextField textFieldPlayer2Name;
-    @FXML
-    private ImageView imageLogo;
+    private Button buttonBack;
 
     /**
      * Initializes the controller class.
@@ -48,15 +46,23 @@ public class EntryScreenForLocalGameController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        myImage = new Image(getClass().getResourceAsStream("logo.jpeg"));
-    }    
-    
+    } 
     
     @FXML
-    public void handlePlayButton (ActionEvent event) throws IOException{
+    public void handleBackButton(ActionEvent event) throws IOException{
         
-        String player1Name = textFieldPlayer1Name.getText();
-        String player2Name = textFieldPlayer2Name.getText();
+        root = FXMLLoader.load(getClass().getResource("Modes.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow() ;
+        scene = new Scene(root) ;
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    @FXML
+     public void handlePlayButton (ActionEvent event) throws IOException{
+        
+        String player1Name = textFieldPlayerOneName.getText();
+        String player2Name = textFieldPlayerTwoName.getText();
         
         
         if (!player1Name.isEmpty() && !player2Name.isEmpty()&&

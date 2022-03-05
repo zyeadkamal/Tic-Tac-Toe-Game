@@ -16,9 +16,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import tictactoelibrary.SignUpModel;
+
+import validation.*;
 
 /**
  * FXML Controller class
@@ -32,17 +37,31 @@ public class RegisterController implements Initializable {
     private Scene scene;
     private Parent root;
     
-    //UserModel user;
+    SignUpModel user;
     
     
     @FXML
     private Button signInId;
     @FXML
     private Button switchToLogin;
+    
     @FXML
     private TextField usernameId;
     @FXML
     private PasswordField passId;
+    @FXML
+    private PasswordField conformPassId;
+    
+    @FXML
+    private Label usernameTagId;
+    @FXML
+    private Label passwordTagId;
+    @FXML
+    private Label signupTagId;
+    
+    
+    SignUpValidation suv ;
+    
 
     /**
      * Initializes the controller class.
@@ -50,6 +69,7 @@ public class RegisterController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        suv = new SignUpValidation();
     }    
     
     
@@ -63,17 +83,45 @@ public class RegisterController implements Initializable {
     }
     
     public void registerUser(ActionEvent event) throws IOException {
-        //user = new UserModel(usernameId.getText(), Integer.parseInt(passId.getText()));
-        //ServerManager sm = new ServerManager();
-        //sm.registerToServer(user);
-        setUserInformation(usernameId.getText(), Integer.parseInt(passId.getText()));
+        
+        
+        
+        if(suv.emptyUsername(usernameId.getText()) == "" && suv.validateSignUpPassword(passId.getText(), conformPassId.getText()) == "") {
+            //System.out.println("correct!");
+            user = new SignUpModel(usernameId.getText(), Integer.parseInt(passId.getText()));
+            ServerManager sm = ServerManager.getInstance();
+            if(sm.registerToServer(user)){    
+            
+                usernameTagId.setVisible(false);
+                passwordTagId.setVisible(false);
+                
+                signupTagId.setTextFill(Color.GREEN);
+                signupTagId.setText("You are successfully registered. Thank you.");    
+                signupTagId.setVisible(true);
+                
+            }
+            else {
+                signupTagId.setTextFill(Color.RED);
+                signupTagId.setText("This username is already registerd. try another username");    
+                signupTagId.setVisible(true);
+            }
+        }
+        else {
+            usernameTagId.setTextFill(Color.RED);
+            usernameTagId.setText(suv.emptyUsername(usernameId.getText()));
+            usernameTagId.setVisible(true);
+            
+            passwordTagId.setTextFill(Color.RED);
+            passwordTagId.setText(suv.validateSignUpPassword(passId.getText(), conformPassId.getText()));
+            passwordTagId.setVisible(true);
+        }
     }
     
-    
+    /*
     public void setUserInformation(String username, int pass) {
         System.out.println("your name = " + username);
         System.out.println("your pass = " + pass);
-    }
+    }*/
     
     
     

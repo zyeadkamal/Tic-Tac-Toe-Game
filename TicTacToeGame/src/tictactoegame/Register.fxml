@@ -48,17 +48,17 @@
                </image>
             </ImageView>
             <PasswordField fx:id="conformPassId" layoutX="148.0" layoutY="285.0" prefHeight="33.0" prefWidth="220.0" promptText="Conform Password" style="-fx-background-color: transparent; -fx-border-color: #ed86b5; -fx-border-width: 0px 0px 2px 0px;" />
-            <Label layoutX="188.0" layoutY="327.0" text="Password are not matching" textFill="RED">
+            <Label fx:id="signupTagId" layoutX="188.0" layoutY="327.0" text="Password are not matching" textFill="RED" visible="false">
                <font>
                   <Font size="12.0" />
                </font>
             </Label>
-            <Label layoutX="381.0" layoutY="189.0" text="Invalid username" textFill="RED">
+            <Label fx:id="usernameTagId" layoutX="381.0" layoutY="189.0" text="Invalid username" textFill="RED" visible="false">
                <font>
                   <Font size="12.0" />
                </font>
             </Label>
-            <Label layoutX="381.0" layoutY="244.0" text="Invalid password" textFill="RED">
+            <Label fx:id="passwordTagId" layoutX="381.0" layoutY="244.0" text="Invalid password" textFill="RED" visible="false">
                <font>
                   <Font size="12.0" />
                </font>

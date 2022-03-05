@@ -16,7 +16,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import tictactoelibrary.LoginModel;
+
+import validation.*;
 
 /**
  * FXML Controller class
@@ -29,6 +36,20 @@ public class LoginController implements Initializable {
     private Scene scene;
     private Parent root;
     
+    LoginModel user;
+    
+    @FXML
+    private Button loginId;
+    @FXML
+    private Button signupId;
+    
+    @FXML
+    private TextField usernameId;
+    @FXML
+    private PasswordField passId;
+    
+    @FXML
+    private Label tagId;
     
 
     /**
@@ -46,6 +67,42 @@ public class LoginController implements Initializable {
         stage.setScene(scene);
         stage.show();
         
+    }
+    
+    public void switchToHome() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("Modes.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        
+    }
+    
+    public void loginUser(ActionEvent event) throws IOException {
+        
+        SignUpValidation suv = new SignUpValidation();
+        if(suv.emptyUsername(usernameId.getText()) == "" && suv.validateLoginPassword(passId.getText()) == "") {
+            //System.out.println("correct!");
+            user = new LoginModel(usernameId.getText(), Integer.parseInt(passId.getText()));
+            ServerManager sm = ServerManager.getInstance();
+            if(sm.loginToServer(user)){    
+            
+                tagId.setVisible(false);
+                
+                System.out.println("logged in");   
+                switchToHome();
+                
+            }
+            else {
+                tagId.setTextFill(Color.RED);
+                tagId.setText("There is no acc. Sign up b2a.");    
+                tagId.setVisible(true);
+            }
+        }
+        else {
+            tagId.setTextFill(Color.RED);
+            tagId.setText(suv.emptyUsername(usernameId.getText()));
+            tagId.setVisible(true);
+        }
     }
     
     

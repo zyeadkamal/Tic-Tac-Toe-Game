@@ -28,7 +28,7 @@
          <children>
             <TextField fx:id="usernameId" layoutX="149.0" layoutY="169.0" prefHeight="33.0" prefWidth="218.0" promptText="Username" style="-fx-background-color: transparent; -fx-border-color: #ed86b5; -fx-border-width: 0px 0px 2px 0px;" />
             <PasswordField fx:id="passId" layoutX="148.0" layoutY="227.0" prefHeight="33.0" prefWidth="220.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #ed86b5; -fx-border-width: 0px 0px 2px 0px;" />
-            <Button fx:id="loginId" layoutX="106.0" layoutY="372.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="263.0" style="-fx-background-color: #ed86b5; -fx-cursor: hand;" text="Login" textFill="WHITE">
+            <Button fx:id="loginId" layoutX="106.0" layoutY="372.0" mnemonicParsing="false" onAction="#loginUser" prefHeight="31.0" prefWidth="263.0" style="-fx-background-color: #ed86b5; -fx-cursor: hand;" text="Login" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font></Button>
@@ -47,7 +47,7 @@
                   <Image url="@../Images/pass-removebg-preview.png" />
                </image>
             </ImageView>
-            <Label layoutX="158.0" layoutY="285.0" text="Wrong username or password" textFill="RED">
+            <Label fx:id="tagId" layoutX="158.0" layoutY="285.0" text="Wrong username or password" textFill="RED">
                <font>
                   <Font size="12.0" />
                </font>

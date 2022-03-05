@@ -14,14 +14,14 @@ import javafx.stage.Modality;
  */
 public class Alerts {
 
-    public static void showWarningAlert() {
+    public static void showWarningAlert(String s) {
         Alert.AlertType type = Alert.AlertType.WARNING;
         Alert alert = new Alert(type, "");
 
         alert.initModality(Modality.APPLICATION_MODAL);
         //alert.initOwner(stage);
         alert.getDialogPane()
-        .setContentText("Information about my NoteBad");
+        .setContentText(s);
         alert.showAndWait();
     }
 }

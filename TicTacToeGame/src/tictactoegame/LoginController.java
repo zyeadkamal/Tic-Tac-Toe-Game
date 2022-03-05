@@ -78,8 +78,9 @@ public class LoginController implements Initializable {
         
     }
     
-    public void switchToBoard() throws IOException {
+    public void switchToBoard(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("OnlinePlayerBoard.fxml"));
+        this.stage = stage;
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
@@ -98,7 +99,7 @@ public class LoginController implements Initializable {
                 tagId.setVisible(false);
                 
                 System.out.println("logged in");   
-                switchToBoard();
+                switchToBoard((Stage)((Node)event.getSource()).getScene().getWindow());
                 
             }
             else {

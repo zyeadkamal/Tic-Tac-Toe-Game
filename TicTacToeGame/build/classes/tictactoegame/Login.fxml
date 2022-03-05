@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoegame.LoginController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoegame.LoginController">
    <left>
       <AnchorPane prefHeight="620.0" prefWidth="250.0" BorderPane.alignment="CENTER">
          <children>
@@ -28,7 +28,7 @@
          <children>
             <TextField fx:id="usernameId" layoutX="149.0" layoutY="169.0" prefHeight="33.0" prefWidth="218.0" promptText="Username" style="-fx-background-color: transparent; -fx-border-color: #ed86b5; -fx-border-width: 0px 0px 2px 0px;" />
             <PasswordField fx:id="passId" layoutX="148.0" layoutY="227.0" prefHeight="33.0" prefWidth="220.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #ed86b5; -fx-border-width: 0px 0px 2px 0px;" />
-            <Button fx:id="loginId" layoutX="106.0" layoutY="372.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="263.0" style="-fx-background-color: #ed86b5; -fx-cursor: hand;" text="Login" textFill="WHITE">
+            <Button fx:id="loginId" layoutX="106.0" layoutY="372.0" mnemonicParsing="false" onAction="#LoginAccount" prefHeight="31.0" prefWidth="263.0" style="-fx-background-color: #ed86b5; -fx-cursor: hand;" text="Login" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font></Button>

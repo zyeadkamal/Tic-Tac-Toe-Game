@@ -48,6 +48,14 @@ public class LoginController implements Initializable {
         
     }
     
+   public void LoginAccount (ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("OnlinePlayerBoard.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();        
+    }
+    
     
     public void setUserInformation(String username, int pass) {
         

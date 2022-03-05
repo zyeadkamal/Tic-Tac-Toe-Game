@@ -5,6 +5,7 @@
  */
 package tictactoegame;
 
+import server.ServerManager;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -77,6 +78,14 @@ public class LoginController implements Initializable {
         
     }
     
+    public void switchToBoard() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("OnlinePlayerBoard.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        
+    }
+    
     public void loginUser(ActionEvent event) throws IOException {
         
         SignUpValidation suv = new SignUpValidation();
@@ -89,7 +98,7 @@ public class LoginController implements Initializable {
                 tagId.setVisible(false);
                 
                 System.out.println("logged in");   
-                switchToHome();
+                switchToBoard();
                 
             }
             else {

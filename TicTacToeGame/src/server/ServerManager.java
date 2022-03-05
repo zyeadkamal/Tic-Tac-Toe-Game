@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tictactoegame;
+package server;
 
 import com.sun.deploy.util.SessionState.Client;
 import java.io.IOException;
@@ -85,9 +85,9 @@ public class ServerManager {
 
             try {
                 Boolean logined = (Boolean) ois.readObject();
-                server.close();
-                ois.close();
-                oos.close();
+                //server.close();
+                //ois.close();
+                //oos.close();
                 return logined;
             } catch (ClassNotFoundException ex) {
                 System.out.println("catcheeeeeeeeeeeeeeeeeeeeeed three");

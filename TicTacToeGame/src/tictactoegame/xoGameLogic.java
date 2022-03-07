@@ -13,63 +13,81 @@ public class xoGameLogic {
 
     public String xPlayer, oPlayer;
     public int xPlayerScore, oPlayerScore;
-    public String[] xoOrderedMoves;
-
+    public String[][] xoArr;
+    boolean xWin = false , oWin  = false;
     public xoGameLogic() {
         
         xPlayer = "X";
         oPlayer = "O";
         xPlayerScore = 0;
         oPlayerScore = 0;
-        xoOrderedMoves = new String[9];
+        xoArr = new String[3][3];
 
-        for (int i = 0; i < 9; i++) {
-            xoOrderedMoves[i] = "0";
+        for (int i = 0; i < 3 ; i++) {
+            for (int j = 0; j < 3 ; j++) {
+                xoArr[i][j] = "_";
+            }
+            
         }
 
     }
 
    
     
-    public boolean isFull() {
-        for (int i = 0; i < 9; i++) {
-            if (xoOrderedMoves[i] == "0") {
+    public boolean isXWin() {
+            //first row
+           if ((xoArr[0][0].equals(xoArr[0][1]) && xoArr[0][1].equals(xoArr[0][2]) && xoArr[0][2].equals("X"))
+                  || (xoArr[1][0].equals(xoArr[1][1]) && xoArr[1][1].equals(xoArr[1][2]) && xoArr[1][2].equals("X"))
+                  || (xoArr[2][0].equals(xoArr[2][1]) && xoArr[2][1].equals(xoArr[2][2]) && xoArr[2][2].equals("X"))
+                  || (xoArr[0][0].equals(xoArr[1][0]) && xoArr[1][0].equals(xoArr[2][0]) && xoArr[2][0].equals("X"))
+                  || (xoArr[0][1].equals(xoArr[1][1]) && xoArr[1][1].equals(xoArr[2][1]) && xoArr[2][1].equals("X"))
+                  || (xoArr[0][2].equals(xoArr[1][2]) && xoArr[1][2].equals(xoArr[2][2]) && xoArr[2][2].equals("X"))
+                  || (xoArr[0][0].equals(xoArr[1][1]) && xoArr[1][1].equals(xoArr[2][2]) && xoArr[2][2].equals("X"))
+                  || (xoArr[0][2].equals(xoArr[1][1]) && xoArr[1][1].equals(xoArr[2][0]) && xoArr[2][0].equals("X"))) {
+               
+                xWin = true;
+                return true;
+           }
+            else
                 return false;
+    }
+    
+     public boolean isOWin() {
+            //first row
+           if ((xoArr[0][0].equals(xoArr[0][1]) && xoArr[0][1].equals(xoArr[0][2]) && xoArr[0][2].equals("O"))
+                  || (xoArr[1][0].equals(xoArr[1][1]) && xoArr[1][1].equals(xoArr[1][2]) && xoArr[1][2].equals("O"))
+                  || (xoArr[2][0].equals(xoArr[2][1]) && xoArr[2][1].equals(xoArr[2][2]) && xoArr[2][2].equals("O"))
+                  || (xoArr[0][0].equals(xoArr[1][0]) && xoArr[1][0].equals(xoArr[2][0]) && xoArr[2][0].equals("O"))
+                  || (xoArr[0][1].equals(xoArr[1][1]) && xoArr[1][1].equals(xoArr[2][1]) && xoArr[2][1].equals("O"))
+                  || (xoArr[0][2].equals(xoArr[1][2]) && xoArr[1][2].equals(xoArr[2][2]) && xoArr[2][2].equals("O"))
+                  || (xoArr[0][0].equals(xoArr[1][1]) && xoArr[1][1].equals(xoArr[2][2]) && xoArr[2][2].equals("O"))
+                  || (xoArr[0][2].equals(xoArr[1][1]) && xoArr[1][1].equals(xoArr[2][0]) && xoArr[2][0].equals("O"))) {
+               
+                oWin = true;
+                return true;
+           }
+            else
+                return false;
+    }
+     
+    public boolean isFull(){
+     
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (xoArr[i][j] == "_") {
+                return false;
+                }
             }
         }
         return true;
     }
     
-    public boolean xPlayerWin() {
-       
-        if ((xoOrderedMoves[0].equals(xoOrderedMoves[1]) && xoOrderedMoves[1].equals(xoOrderedMoves[2]) && xoOrderedMoves[2].equals(xPlayer))
-                || (xoOrderedMoves[3].equals(xoOrderedMoves[4]) && xoOrderedMoves[4].equals(xoOrderedMoves[5]) && xoOrderedMoves[5].equals(xPlayer))
-                || (xoOrderedMoves[6].equals(xoOrderedMoves[7]) && xoOrderedMoves[7].equals(xoOrderedMoves[8]) && xoOrderedMoves[8].equals(xPlayer))
-                || (xoOrderedMoves[0].equals(xoOrderedMoves[3]) && xoOrderedMoves[3].equals(xoOrderedMoves[6]) && xoOrderedMoves[6].equals(xPlayer))
-                || (xoOrderedMoves[1].equals(xoOrderedMoves[4]) && xoOrderedMoves[4].equals(xoOrderedMoves[7]) && xoOrderedMoves[7].equals(xPlayer))
-                || (xoOrderedMoves[2].equals(xoOrderedMoves[5]) && xoOrderedMoves[5].equals(xoOrderedMoves[8]) && xoOrderedMoves[8].equals(xPlayer))
-                || (xoOrderedMoves[0].equals(xoOrderedMoves[4]) && xoOrderedMoves[4].equals(xoOrderedMoves[8]) && xoOrderedMoves[8].equals(xPlayer))
-                || (xoOrderedMoves[2].equals(xoOrderedMoves[4]) && xoOrderedMoves[4].equals(xoOrderedMoves[6]) && xoOrderedMoves[6].equals(xPlayer))) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean oPlayerWin() {
+    public boolean isDraw(){
         
-        if ((xoOrderedMoves[0].equals(xoOrderedMoves[1]) && xoOrderedMoves[1].equals(xoOrderedMoves[2]) && xoOrderedMoves[2].equals(oPlayer))
-                || (xoOrderedMoves[3].equals(xoOrderedMoves[4]) && xoOrderedMoves[4].equals(xoOrderedMoves[5]) && xoOrderedMoves[5].equals(oPlayer))
-                || (xoOrderedMoves[6].equals(xoOrderedMoves[7]) && xoOrderedMoves[7].equals(xoOrderedMoves[8]) && xoOrderedMoves[8].equals(oPlayer))
-                || (xoOrderedMoves[0].equals(xoOrderedMoves[3]) && xoOrderedMoves[3].equals(xoOrderedMoves[6]) && xoOrderedMoves[6].equals(oPlayer))
-                || (xoOrderedMoves[1].equals(xoOrderedMoves[4]) && xoOrderedMoves[4].equals(xoOrderedMoves[7]) && xoOrderedMoves[7].equals(oPlayer))
-                || (xoOrderedMoves[2].equals(xoOrderedMoves[5]) && xoOrderedMoves[5].equals(xoOrderedMoves[8]) && xoOrderedMoves[8].equals(oPlayer))
-                || (xoOrderedMoves[0].equals(xoOrderedMoves[4]) && xoOrderedMoves[4].equals(xoOrderedMoves[8]) && xoOrderedMoves[8].equals(oPlayer))
-                || (xoOrderedMoves[2].equals(xoOrderedMoves[4]) && xoOrderedMoves[4].equals(xoOrderedMoves[6]) && xoOrderedMoves[6].equals(oPlayer))) {
+        if (isFull() && !xWin && !oWin) {
             return true;
-        } else {
-            return false;
         }
+        return  false;
     }
 
 }

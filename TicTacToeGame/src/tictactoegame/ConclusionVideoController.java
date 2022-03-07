@@ -69,7 +69,7 @@ public class ConclusionVideoController implements Initializable {
         //System.out.println("video 66");
         mediaPlayer.play();
         //System.out.println("video 68");
-        mediaPlayer.setStopTime(Duration.seconds(10));
+        mediaPlayer.setStopTime(Duration.seconds(8));
         }
         else if(winnerName.equals("tied")){
         file = new File("src/tictactoegame/looser.mp4") ;

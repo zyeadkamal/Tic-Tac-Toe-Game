@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -9,12 +10,7 @@
    <children>
       <AnchorPane layoutX="400.0" prefHeight="400.0" prefWidth="200.0" style="-fx-background-color: #fcb740#fcb740;">
          <children>
-            <Button fx:id="buttonRecord" layoutX="39.0" layoutY="44.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="123.0" style="-fx-background-color: #c6da6c#c6da6c; -fx-background-radius: 90;" text="record" textFill="#fcf9f9">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Button>
-            <Button fx:id="buttonHistory" layoutX="43.0" layoutY="307.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="123.0" style="-fx-background-color: #c6da6c#c6da6c; -fx-background-radius: 90;" text="History" textFill="WHITE">
+            <Button fx:id="buttonHistory" layoutX="43.0" layoutY="307.0" mnemonicParsing="false" onAction="#historyButton" prefHeight="43.0" prefWidth="123.0" style="-fx-background-color: #c6da6c#c6da6c; -fx-background-radius: 90;" text="History" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>
@@ -39,6 +35,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
+            <RadioButton fx:id="buttonRecord" layoutX="48.0" layoutY="54.0" mnemonicParsing="false" onAction="#handleRecordButton" prefHeight="18.0" prefWidth="90.0" text="Record" />
          </children>
       </AnchorPane>
       <Button fx:id="buttonExit" layoutX="11.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleExitButton" prefHeight="43.0" prefWidth="26.0" style="-fx-background-color: #c6da6c#c6da6c #c6da6c#c6da6c; -fx-background-radius: 10;" text="X" textFill="#f8f8f8">

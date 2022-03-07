@@ -77,7 +77,7 @@ public class ReplayGamesController extends Thread implements Initializable {
     private void backBtnPressed(ActionEvent event) {
         
         try {
-            root = FXMLLoader.load(getClass().getResource("SingleMode.fxml"));
+            root = FXMLLoader.load(getClass().getResource("Modes.fxml"));
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -118,6 +118,7 @@ public class ReplayGamesController extends Thread implements Initializable {
                             if (move.charAt(0) == '0' && move.charAt(1) == '0') {
                                 String turn = String.valueOf(move.charAt(2));
                                 Platform.runLater(() -> btn1.setText(turn));
+                                
 
                             }
 

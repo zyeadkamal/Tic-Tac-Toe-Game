@@ -21,7 +21,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
+import RecordingHandler.CreatRecordFiles ;
 
 /**
  * FXML Controller class
@@ -34,10 +36,12 @@ public class LocalMultiPlayerController extends xoGameLogic implements Initializ
     private  Stage stage ;
     private Scene scene ;
     private Parent root ;
+    boolean recorded  = false ;
+    String gameRecord , player1Name , player2Name;
     
     
     @FXML
-    private Button buttonRecord;
+    private RadioButton buttonRecord;
     @FXML
     private Button buttonHistory;
     @FXML
@@ -87,14 +91,24 @@ public class LocalMultiPlayerController extends xoGameLogic implements Initializ
         
             turnLabel.setText( player1Label.getText() + " turn");
             firstPlayerTurn = 1;
+            gameRecord = "" ;
             
       
+    }
+    
+    @FXML
+    private void handleRecordButton(ActionEvent event) {
+        
+        recorded = !recorded ;
+       
     }
     
     
     public void setPlayersName(String player1 , String player2){
         player1Label.setText(player1);
         player2Label.setText(player2);
+        player1Name = player1Label.getText();
+        player2Name = player2Label.getText();
     }
     
     @FXML
@@ -110,9 +124,15 @@ public class LocalMultiPlayerController extends xoGameLogic implements Initializ
     @FXML
     public void handlingRestartButton(ActionEvent event){
         
-        for (int i = 0 ; i < 9 ; i++){
-            xoOrderedMoves[i] = "0" ;
+        for (int i = 0 ; i < 3 ; i++){
+            for (int j = 0; j < 3; j++) {
+                xoArr[i][j] = "_" ;
+            }
+          
         }
+        xWin = false ;
+        oWin = false ;
+        gameRecord = "";
         
         button1.setText("");
         button2.setText("");
@@ -156,73 +176,82 @@ public class LocalMultiPlayerController extends xoGameLogic implements Initializ
 
         }
         if (source.getId().equals(button1.getId())) {
-            xoOrderedMoves[0] = source.getText();
-            System.out.println(button1.getText());
-            System.out.println(xoOrderedMoves[0]);
+            xoArr[0][0] = source.getText();
+            gameRecord = gameRecord.concat("00"+source.getText()+",") ;
+            
             
         } else if (source.getId().equals(button2.getId())) {
-            xoOrderedMoves[1] = source.getText();
-            System.out.println(button2.getText());
-            System.out.println(xoOrderedMoves[1]);
+            xoArr[0][1] = source.getText();
+            gameRecord = gameRecord.concat("01"+source.getText()+",") ;
             
         } else if (source.getId().equals(button3.getId())) {
-            xoOrderedMoves[2] = source.getText();
-            System.out.println(button3.getText());
-            System.out.println(xoOrderedMoves[2]);
+            xoArr[0][2] = source.getText();
+            gameRecord = gameRecord.concat("02"+source.getText()+",") ;
             
         } else if (source.getId().equals(button4.getId())) {
-            xoOrderedMoves[3] = source.getText();
-            System.out.println(button4.getText());
-            System.out.println(xoOrderedMoves[3]);
+            xoArr[1][0] = source.getText();
+           gameRecord = gameRecord.concat("10"+source.getText()+",") ;
            
         } else if (source.getId().equals(button5.getId())) {
-            xoOrderedMoves[4] = source.getText();
-            System.out.println(button5.getText());
-            System.out.println(xoOrderedMoves[4]);
+            xoArr[1][1] = source.getText();
+            gameRecord = gameRecord.concat("11"+source.getText()+",") ;
            
         } else if (source.getId().equals(button6.getId())) {
-            xoOrderedMoves[5] = source.getText();
-            System.out.println(button6.getText());
-            System.out.println(xoOrderedMoves[5]);
+            xoArr[1][2] = source.getText();
+            gameRecord = gameRecord.concat("12"+source.getText()+",") ;
          
         } else if (source.getId().equals(button7.getId())) {
-            xoOrderedMoves[6] = source.getText();
-            System.out.println(button7.getText());
-            System.out.println(xoOrderedMoves[6]);
+            xoArr[2][0] = source.getText();
+            gameRecord = gameRecord.concat("20"+source.getText()+",") ;
             
         } else if (source.getId().equals(button8.getId())) {
-            xoOrderedMoves[7] = source.getText();
-            System.out.println(button8.getText());
-            System.out.println(xoOrderedMoves[7]);
+            xoArr[2][1] = source.getText();
+            gameRecord = gameRecord.concat("21"+source.getText()+",") ;
             
         } else if (source.getId().equals(button9.getId())) {
-            xoOrderedMoves[8] = source.getText();
-            System.out.println(button9.getText());
-            System.out.println(xoOrderedMoves[8]);
+            xoArr[2][2] = source.getText();
+            gameRecord = gameRecord.concat("22"+source.getText()+",") ;
             
         }
         
-        if (xPlayerWin()) {
+        if (isXWin()) {
             
             xPlayerScore++;
             player1ResultLabel.setText(xPlayerScore + "");
+            System.out.println(player1ResultLabel.getText());
+            
+            if(recorded){
+                CreatRecordFiles.writeFile(player1Name+"-"+player2Name+","+gameRecord,"local-mode",player1Name+" VS "+player2Name);
+            }
             terminateExistingRound("win", player1Label.getText());
+            System.out.println(gameRecord);
 
         }
 
-        if (oPlayerWin()) {
+        if (isOWin()) {
             
             oPlayerScore++;
-            player2ResultLabel.setText(oPlayerScore + " Wins");
+            player2ResultLabel.setText(oPlayerScore + "");
+            System.out.println(player2ResultLabel.getText());
+            
+            if(recorded){
+                CreatRecordFiles.writeFile(player1Name+"-"+player2Name+","+gameRecord,"local-mode",player1Name+" VS "+player2Name);
+            }
             terminateExistingRound("win", player2Label.getText());
+            System.out.println(gameRecord);
 
         }
         
-        if (isFull()) {
+        if (isDraw()) {
             xPlayerScore++ ;
             oPlayerScore++ ;
             turnLabel.setText("You are tied");
+            
+            if(recorded){
+                CreatRecordFiles.writeFile(player1Name+"-"+player2Name+","+gameRecord,"local-mode",player1Name+" VS "+player2Name);
+            }
             terminateExistingRound("tied","");
+            System.out.println(gameRecord);
         }
 
     }
@@ -248,8 +277,10 @@ public class LocalMultiPlayerController extends xoGameLogic implements Initializ
     
     public void terminateExistingRound(String winnerName , String name )  {
         
-        for (int i = 0; i < 9; i++) {
-            xoOrderedMoves[i] = "0" ;
+        for (int i = 0 ; i < 3 ; i++){
+            for (int j = 0; j < 3; j++) {
+                xoArr[i][j] = "_" ;
+            }
         }
         
         button1.setDisable(true);
@@ -287,6 +318,26 @@ public class LocalMultiPlayerController extends xoGameLogic implements Initializ
         //System.out.println("237");
 
     }
+
+    @FXML
+    private void historyButton(ActionEvent event) {
+        
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("GamesRecordsTable.fxml"));
+            root = loader.load();
+            GamesRecordsTableController gamesRecordsTableController = loader.getController() ;
+            gamesRecordsTableController.setType("local-mode");
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow() ;
+            scene = new Scene(root) ;
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(SingleModeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+
+    
     
 
 }

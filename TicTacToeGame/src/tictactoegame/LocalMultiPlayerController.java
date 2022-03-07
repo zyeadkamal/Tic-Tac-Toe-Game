@@ -206,7 +206,7 @@ public class LocalMultiPlayerController extends xoGameLogic implements Initializ
             
             xPlayerScore++;
             player1ResultLabel.setText(xPlayerScore + "");
-            terminateExistingRound(player1Label.getText() + " Wins");
+            terminateExistingRound("win", player1Label.getText());
 
         }
 
@@ -214,7 +214,7 @@ public class LocalMultiPlayerController extends xoGameLogic implements Initializ
             
             oPlayerScore++;
             player2ResultLabel.setText(oPlayerScore + " Wins");
-            terminateExistingRound(player2Label.getText());
+            terminateExistingRound("win", player2Label.getText());
 
         }
         
@@ -222,7 +222,7 @@ public class LocalMultiPlayerController extends xoGameLogic implements Initializ
             xPlayerScore++ ;
             oPlayerScore++ ;
             turnLabel.setText("You are tied");
-            terminateExistingRound("    tied");
+            terminateExistingRound("tied","");
         }
 
     }
@@ -246,7 +246,7 @@ public class LocalMultiPlayerController extends xoGameLogic implements Initializ
 
     }
     
-    public void terminateExistingRound(String winnerName )  {
+    public void terminateExistingRound(String winnerName , String name )  {
         
         for (int i = 0; i < 9; i++) {
             xoOrderedMoves[i] = "0" ;
@@ -275,7 +275,7 @@ public class LocalMultiPlayerController extends xoGameLogic implements Initializ
         //System.out.println("227");
         ConclusionVideoController conclusionVideoController = Loader.getController();
         //System.out.println("229");
-        conclusionVideoController.setWinnerNameLabel(winnerName);
+        conclusionVideoController.setWinnerNameLabel(winnerName , name);
         turnLabel.setText(winnerName);
         //System.out.println("231"); 
         stage = new Stage();

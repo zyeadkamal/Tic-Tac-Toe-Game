@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fcb740;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoegame.ReplayGamesController">
+   <children>
+      <Button fx:id="btn1" layoutX="103.0" layoutY="48.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="121.0">
+         <font>
+            <Font size="49.0" />
+         </font></Button>
+      <Button fx:id="btn2" layoutX="240.0" layoutY="48.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="121.0">
+         <font>
+            <Font size="49.0" />
+         </font></Button>
+      <Button fx:id="btn3" layoutX="376.0" layoutY="48.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="121.0">
+         <font>
+            <Font size="49.0" />
+         </font></Button>
+      <Button fx:id="btn6" layoutX="376.0" layoutY="153.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="121.0">
+         <font>
+            <Font size="49.0" />
+         </font></Button>
+      <Button fx:id="btn5" layoutX="240.0" layoutY="153.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="121.0">
+         <font>
+            <Font size="49.0" />
+         </font></Button>
+      <Button fx:id="btn4" layoutX="103.0" layoutY="153.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="121.0">
+         <font>
+            <Font size="49.0" />
+         </font></Button>
+      <Button fx:id="btn9" layoutX="376.0" layoutY="258.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="121.0">
+         <font>
+            <Font size="49.0" />
+         </font></Button>
+      <Button fx:id="btn8" layoutX="240.0" layoutY="258.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="121.0">
+         <font>
+            <Font size="49.0" />
+         </font></Button>
+      <Button fx:id="btn7" layoutX="103.0" layoutY="258.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="121.0">
+         <font>
+            <Font size="49.0" />
+         </font></Button>
+      <Button fx:id="backBtn" alignment="CENTER" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#backBtnPressed" prefHeight="39.0" prefWidth="35.0" style="-fx-background-color: #c6da6c; -fx-background-radius: 100;" text="X" textFill="WHITE">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

@@ -8,15 +8,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="300.0" prefWidth="600.0" style="-fx-background-color: #fcb740;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="tictactoegame.EnterSingleModeController">
+<AnchorPane id="AnchorPane" prefHeight="300.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoegame.EnterSingleModeController">
    <children>
-      <ImageView fitHeight="300.0" fitWidth="309.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="logoIMageView" fitHeight="300.0" fitWidth="334.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../../../Downloads/34783754_137280953813964_4222166062734508032_n.png" />
+            <Image url="@../../logo.png" />
          </image>
       </ImageView>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="337.0" layoutY="71.0" prefHeight="36.0" prefWidth="92.0" text="Name" textFill="WHITE" AnchorPane.leftAnchor="337.0">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="337.0" layoutY="71.0" prefHeight="36.0" prefWidth="92.0" text="Name" AnchorPane.leftAnchor="337.0">
          <font>
             <Font size="30.0" />
          </font>

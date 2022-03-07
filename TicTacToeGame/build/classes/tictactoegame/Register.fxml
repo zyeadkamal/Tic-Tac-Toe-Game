@@ -28,6 +28,7 @@
          <children>
             <TextField fx:id="usernameId" layoutX="149.0" layoutY="169.0" prefHeight="33.0" prefWidth="218.0" promptText="Username" style="-fx-background-color: transparent; -fx-border-color: #ed86b5; -fx-border-width: 0px 0px 2px 0px;" />
             <PasswordField fx:id="passId" layoutX="148.0" layoutY="227.0" prefHeight="33.0" prefWidth="220.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #ed86b5; -fx-border-width: 0px 0px 2px 0px;" />
+            <PasswordField fx:id="conformPassId" layoutX="148.0" layoutY="285.0" prefHeight="33.0" prefWidth="220.0" promptText="Conform Password" style="-fx-background-color: transparent; -fx-border-color: #ed86b5; -fx-border-width: 0px 0px 2px 0px;" />
             <Button fx:id="signInId" layoutX="106.0" layoutY="372.0" mnemonicParsing="false" onAction="#registerUser" prefHeight="31.0" prefWidth="263.0" style="-fx-background-color: #ed86b5; -fx-cursor: hand;" text="Sign Up" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
@@ -47,18 +48,17 @@
                   <Image url="@../Images/pass-removebg-preview.png" />
                </image>
             </ImageView>
-            <PasswordField fx:id="conformPassId" layoutX="148.0" layoutY="285.0" prefHeight="33.0" prefWidth="220.0" promptText="Conform Password" style="-fx-background-color: transparent; -fx-border-color: #ed86b5; -fx-border-width: 0px 0px 2px 0px;" />
-            <Label layoutX="188.0" layoutY="327.0" text="Password are not matching" textFill="RED">
+            <Label fx:id="signupTagId" layoutX="195.0" layoutY="348.0" text="result" textFill="RED" visible="false">
                <font>
                   <Font size="12.0" />
                </font>
             </Label>
-            <Label layoutX="381.0" layoutY="189.0" text="Invalid username" textFill="RED">
+            <Label fx:id="usernameTagId" layoutX="391.0" layoutY="194.0" text="Invalid username" textAlignment="CENTER" textFill="RED" visible="false">
                <font>
                   <Font size="12.0" />
                </font>
             </Label>
-            <Label layoutX="381.0" layoutY="244.0" text="Invalid password" textFill="RED">
+            <Label fx:id="passwordTagId" layoutX="392.0" layoutY="250.0" text="passwordTagId" textFill="RED" visible="false">
                <font>
                   <Font size="12.0" />
                </font>
@@ -68,6 +68,11 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Button>
+            <Label layoutX="136.0" layoutY="331.0" text="The password must contain only digits" textFill="#000000bb">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </center>

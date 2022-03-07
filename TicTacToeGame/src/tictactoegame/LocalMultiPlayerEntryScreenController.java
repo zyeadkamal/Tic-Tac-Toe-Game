@@ -15,6 +15,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -56,6 +58,7 @@ public class LocalMultiPlayerEntryScreenController implements Initializable {
         scene = new Scene(root) ;
         stage.setScene(scene);
         stage.show();
+       
     }
     
     @FXML
@@ -69,7 +72,7 @@ public class LocalMultiPlayerEntryScreenController implements Initializable {
             !player1Name.startsWith(" ") && !player2Name.startsWith(" ")) {
             
         //*********************** if condition is false add alert later **********************
-        
+     
         FXMLLoader loader = new FXMLLoader(getClass().getResource("LocalMultiPlayer.fxml"));
         root = loader.load();
         LocalMultiPlayerController localMultiPlayercotController = loader.getController() ;
@@ -80,6 +83,17 @@ public class LocalMultiPlayerEntryScreenController implements Initializable {
         scene = new Scene(root) ;
         stage.setScene(scene);
         stage.show();
+        stage.setResizable(false);
+        }
+        else {
+        Alert invaildNameAlert = new Alert(AlertType.WARNING);
+        invaildNameAlert.setTitle("Empty Names");
+        invaildNameAlert.setHeaderText("Can't enter the game without names (can't start a name with space) ");
+        invaildNameAlert.setResizable(true);
+        String version = System.getProperty("java.version");
+        String content = String.format("Pres OK to return back", version);
+        invaildNameAlert.setContentText(content);
+        invaildNameAlert.showAndWait();
         }
 
 

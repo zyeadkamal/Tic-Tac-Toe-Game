@@ -29,20 +29,7 @@ public class xoGameLogic {
 
     }
 
-    /*
-    public xoGameLogic(String xPlayer, String oPlayer) {
-
-        xoOrderedMoves = new String[9];
-        this.xPlayer = xPlayer;
-        this.oPlayer = oPlayer;
-        xPlayerScore = 0;
-        oPlayerScore = 0;
-
-        for (int i = 0; i < 9; i++) {
-            xoOrderedMoves[i] = "0";
-        }
-    }
-    */
+   
     
     public boolean isFull() {
         for (int i = 0; i < 9; i++) {

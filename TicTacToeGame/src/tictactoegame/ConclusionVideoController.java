@@ -22,6 +22,8 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import javafx.util.Duration;
 
 /**
  * FXML Controller class
@@ -54,19 +56,20 @@ public class ConclusionVideoController implements Initializable {
     
     public void setWinnerNameLabel(String winnerName){
         
-        labelWinner.setText("Congraats "+winnerName);
-        System.out.println("video 58");
-        if (!winnerName.equals("tied")){
+        labelWinner.setText(winnerName);
+        //System.out.println("video 58");
+        if (!winnerName.equals("    tied")){
         file = new File("src/tictactoegame/winningVideo.mp4") ;
-        System.out.println("video 60");
+        //System.out.println("video 60");
         media = new Media(file.toURI().toString()) ;
-        System.out.println("video 62");
+        //System.out.println("video 62");
         mediaPlayer = new MediaPlayer(media) ;
-        System.out.println("video 64");
+        //System.out.println("video 64");
         mediaViewConclusion.setMediaPlayer(mediaPlayer);
-        System.out.println("video 66");
+        //System.out.println("video 66");
         mediaPlayer.play();
-        System.out.println("video 68");
+        //System.out.println("video 68");
+        mediaPlayer.setStopTime(Duration.seconds(10));
         }
         else{
         file = new File("/Users/amrelshazly/Desktop/iti/java course/Tic-Tac-Toe-Game-main/TicTacToeGame/src/tictactoegame/looser.mp4") ;
@@ -74,6 +77,8 @@ public class ConclusionVideoController implements Initializable {
         mediaPlayer = new MediaPlayer(media) ;
         mediaViewConclusion.setMediaPlayer(mediaPlayer);
         mediaPlayer.play();
+        mediaPlayer.setStopTime(Duration.seconds(10));
+        
         }
         
     }
@@ -90,7 +95,12 @@ public class ConclusionVideoController implements Initializable {
            stage = (Stage) buttonExit.getScene().getWindow();
            // do what you have to do
            System.out.println("video 86");
+           mediaPlayer.pause();
            stage.close();
+    }
+    
+    public void windowClosing(WindowEvent e){
+            mediaPlayer.pause();
     }
     
 }

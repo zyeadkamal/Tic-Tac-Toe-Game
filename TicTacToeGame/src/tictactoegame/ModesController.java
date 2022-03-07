@@ -45,7 +45,7 @@ public class ModesController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-
+        stage.setResizable(false);
     }
 
     public void switchToSingle(ActionEvent event) throws IOException {

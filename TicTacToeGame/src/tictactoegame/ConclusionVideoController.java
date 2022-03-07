@@ -54,11 +54,11 @@ public class ConclusionVideoController implements Initializable {
         // TODO
     }    
     
-    public void setWinnerNameLabel(String winnerName){
+    public void setWinnerNameLabel(String winnerName , String name){
         
-        labelWinner.setText(winnerName);
+        labelWinner.setText(name+" "+winnerName);
         //System.out.println("video 58");
-        if (!winnerName.equals("    tied")){
+        if (winnerName.equals("win")){
         file = new File("src/tictactoegame/winningVideo.mp4") ;
         //System.out.println("video 60");
         media = new Media(file.toURI().toString()) ;
@@ -71,8 +71,17 @@ public class ConclusionVideoController implements Initializable {
         //System.out.println("video 68");
         mediaPlayer.setStopTime(Duration.seconds(10));
         }
-        else{
-        file = new File("/Users/amrelshazly/Desktop/iti/java course/Tic-Tac-Toe-Game-main/TicTacToeGame/src/tictactoegame/looser.mp4") ;
+        else if(winnerName.equals("tied")){
+        file = new File("src/tictactoegame/looser.mp4") ;
+        media = new Media(file.toURI().toString()) ;
+        mediaPlayer = new MediaPlayer(media) ;
+        mediaViewConclusion.setMediaPlayer(mediaPlayer);
+        mediaPlayer.play();
+        mediaPlayer.setStopTime(Duration.seconds(10));
+        
+        }
+        else if(winnerName.equals("lose")){
+        file = new File("src/tictactoegame/lose.mp4") ;
         media = new Media(file.toURI().toString()) ;
         mediaPlayer = new MediaPlayer(media) ;
         mediaViewConclusion.setMediaPlayer(mediaPlayer);

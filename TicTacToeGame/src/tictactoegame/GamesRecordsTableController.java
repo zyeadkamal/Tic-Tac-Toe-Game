@@ -78,7 +78,7 @@ public class GamesRecordsTableController implements Initializable {
     private void backButtonPressed(ActionEvent event) {
         
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("SingleMode.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("Modes.fxml"));
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);

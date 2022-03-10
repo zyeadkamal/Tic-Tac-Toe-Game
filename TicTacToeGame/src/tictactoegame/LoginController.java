@@ -98,7 +98,9 @@ public class LoginController implements Initializable {
             
                 tagId.setVisible(false);
                 
-                System.out.println("logged in");   
+                System.out.println("logged in"); 
+                sm.reqOnlineUsers();
+                System.out.println("I send req to det online users");
                 switchToBoard((Stage)((Node)event.getSource()).getScene().getWindow());
                 
             }

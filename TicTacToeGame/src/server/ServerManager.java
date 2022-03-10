@@ -10,36 +10,37 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import tictactoegame.Alerts;
 import tictactoelibrary.*;
+import requests.*;
 
 //import user.;
-
-
 /**
  *
  * @author EmanAbobakr
  */
 public class ServerManager {
-    
+
     private static ServerManager serverManagerObj;
 
     Socket server;
     ObjectInputStream ois;
     ObjectOutputStream oos;
-    
+
     private ServerManager() {
     }
-    
-    public static ServerManager getInstance(){
-        if(serverManagerObj == null)
+
+    public static ServerManager getInstance() {
+        if (serverManagerObj == null) {
             return serverManagerObj = new ServerManager();
-        else
+        } else {
             return serverManagerObj;
+        }
     }
-    
+
     public boolean connectToServer() {
         try {
             //server = new Socket("10.145.5.245", 5005);
@@ -50,11 +51,11 @@ public class ServerManager {
         } catch (IOException ex) {
             Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
             return false;
-        }       
+        }
     }
 
     public String registerToServer(SignUpModel user) {
-        
+
         System.out.println("user nameeee " + user.getUsername());
         System.out.println("passworddddd " + user.getPassword());
         try {
@@ -63,12 +64,13 @@ public class ServerManager {
 //            oos = new ObjectOutputStream(server.getOutputStream());
             oos.writeObject(user);
             try {
-                
+
                 Boolean registered = new Boolean((boolean) ois.readObject());
-                if(registered)
+                if (registered) {
                     return "You are successfully registered. Thank you.";
-                else
+                } else {
                     return "This username is already registerd. try another username";
+                }
                 //System.out.println(registered);
             } catch (ClassNotFoundException ex) {
                 System.out.println("catcheeeeeeeeeeeeeeeeeeeeeed one");
@@ -77,29 +79,28 @@ public class ServerManager {
                 return "You are successfully registered. Thank you.";
             }
         } catch (IOException ex) {
-            
+
             System.out.println("catcheeeeeeeeeeeeeeeeeeeeeed two");
             Alerts.showWarningAlert("The server is not available. Try later");
             Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
             return "";
         }
-        
+
     }
-    
+
     public boolean loginToServer(LoginModel user) {
-        
+
         System.out.println("user nameeee " + user.getUsername());
         System.out.println("passworddddd " + user.getPassword());
         try {
             System.out.println("I will try");
             //server = new Socket("10.145.5.245", 5005);
-            server = new Socket("localhost", 5005);
-            ois = new ObjectInputStream(server.getInputStream());
-            oos = new ObjectOutputStream(server.getOutputStream());
+//            server = new Socket("localhost", 5005);
+//            ois = new ObjectInputStream(server.getInputStream());
+//            oos = new ObjectOutputStream(server.getOutputStream());
             oos.writeObject(user);
-            
-            //oos.writeObject("Hello ya Adel");
 
+            //oos.writeObject("Hello ya Adel");
             try {
                 Boolean logined = (Boolean) ois.readObject();
                 //server.close();
@@ -110,13 +111,47 @@ public class ServerManager {
                 System.out.println("catcheeeeeeeeeeeeeeeeeeeeeed three");
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
             }
- 
+
         } catch (IOException ex) {
             System.out.println("catcheeeeeeeeeeeeeeeeeeeeeed four");
             Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
 
+    }
+    
+    public void reqOnlineUsers(){
+        String s = new String("getOnlineUser");
+        try {
+            oos.writeObject(s);
+        } catch (IOException ex) {
+            Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public OnlineUsersVector getOnlineUsers() {
+        //OnlineUsers ou = new OnlineUsers();
+        OnlineUsersVector ouv;
+        try {
+            Object obj;
+            obj = ois.readObject();
+//            if(obj instanceof OnlineUsers)
+//            {
+//                ou = (OnlineUsers) obj;
+//                return ou;
+//            }
+            if(obj instanceof OnlineUsersVector)
+            {
+                ouv = (OnlineUsersVector) obj;
+                return ouv;
+            }
+           
+        } catch (IOException ex) {
+            Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
 }

@@ -9,6 +9,6 @@ package interfaces;
  *
  * @author EmanAbobakr
  */
-public interface Views {
+public interface NavigationInterface {
     abstract public void navigateToNext();
 }

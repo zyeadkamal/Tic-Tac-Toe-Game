@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="601.0" prefWidth="796.0" style="-fx-background-color: ed86b5;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoegame.OnlinePlayerBoardController">
+<AnchorPane id="AnchorPane" prefHeight="601.0" prefWidth="796.0" style="-fx-background-color: ed86b5;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoegame.OnlinePlayerBoardController">
    <children>
       <Text fx:id="textId" fill="#93d2db" layoutX="262.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Players Board">
          <font>
@@ -33,11 +33,6 @@
                               </TableView>
                            </children>
                         </AnchorPane>
-                     </content>
-                  </Tab>
-                  <Tab text="  Request  ">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                      </content>
                   </Tab>
                </tabs>

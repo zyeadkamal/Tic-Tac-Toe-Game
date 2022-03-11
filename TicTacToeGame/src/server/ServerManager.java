@@ -23,9 +23,10 @@ import requests.*;
 import tictactoegame.LoginController;
 import tictactoegame.OnlinePlayerBoardController;
 import tictactoegame.OnlineTable;
-import interfaces.Views;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import interfaces.NavigationInterface;
+import interfaces.OnlinePlayerBoardInterface;
 
 //import user.;
 /**
@@ -39,7 +40,8 @@ public class ServerManager implements Runnable {
     Socket server;
     ObjectInputStream ois;
     ObjectOutputStream oos;
-    public Views delegate;
+    public NavigationInterface delegate;
+    public OnlinePlayerBoardInterface onlinePlayerBoardDelegate;
 
     Thread thread;
 
@@ -102,6 +104,24 @@ public class ServerManager implements Runnable {
             Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public void sendRequest(GameRequest gameRequest)
+    {
+        try {
+            oos.writeObject(gameRequest);
+        } catch (IOException ex) {
+            Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void AcceptResponse(AcceptancePlayingRequest accept)
+    {
+        try {
+            oos.writeObject(accept);
+        } catch (IOException ex) {
+            Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 
     @Override
     public void run() {
@@ -149,7 +169,8 @@ public class ServerManager implements Runnable {
                             }
                         });
 
-                    } else {
+                    } 
+                    else {
                         System.out.println("Weird string from server");
                         System.out.println(str);
                     }
@@ -162,6 +183,7 @@ public class ServerManager implements Runnable {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
+                            //update table view without username 
                             OnlinePlayerBoardController.ouv = ouv;
                             OnlinePlayerBoardController.observableList.clear();
                             for (int i = 0; i < ouv.bigOnlineUsersVec.size(); i++) {
@@ -173,7 +195,34 @@ public class ServerManager implements Runnable {
                             }
                         }
                     });
-
+                }                
+                else if (obj instanceof GameRequest) {
+                    System.out.println("Recieve Request");
+                    GameRequest gameRequest = (GameRequest) obj;
+//                    System.out.println("I am "+gameRequest.getRecieverPlayer());
+//                    System.out.println("player"+gameRequest.getStartingPlayer());
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            System.out.println("I am "+gameRequest.getRecieverPlayer());
+                            System.out.println("player "+gameRequest.getStartingPlayer());
+                            onlinePlayerBoardDelegate.showAlert(gameRequest);
+                        }
+                    });      
+                    
+                    
+                }
+                
+                else if (obj instanceof AcceptancePlayingRequest) {
+                   AcceptancePlayingRequest accept = (AcceptancePlayingRequest) obj;
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                               onlinePlayerBoardDelegate.NavigateToGame(accept);
+                            }
+                        });    
+                    
+                    
                 }
             } catch (IOException ex) {
                 Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);

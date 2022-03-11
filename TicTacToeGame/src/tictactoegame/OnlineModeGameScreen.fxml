@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="427.0" prefWidth="642.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoegame.OnlineModeGameScreenController">
+   <children>
+      <AnchorPane layoutX="461.0" prefHeight="427.0" prefWidth="181.0" style="-fx-background-color: e47dac;">
+         <children>
+            <Label fx:id="player1NameLabel" alignment="CENTER" layoutX="20.0" layoutY="66.0" prefHeight="50.0" prefWidth="125.0" style="-fx-background-color: #92d2dc; -fx-background-radius: 20;" text="Player1" textFill="#fcfcfc" AnchorPane.rightAnchor="32.0">
+               <font>
+                  <Font size="31.0" />
+               </font>
+            </Label>
+            <Label fx:id="userScore" alignment="CENTER" layoutX="20.0" layoutY="121.0" prefHeight="50.0" prefWidth="125.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="32.0">
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </Label>
+            <Label fx:id="pcScore" alignment="CENTER" layoutX="24.0" layoutY="226.0" prefHeight="50.0" prefWidth="125.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="32.0">
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </Label>
+            <Label fx:id="player2NameLabel" alignment="CENTER" layoutX="24.0" layoutY="176.0" prefHeight="50.0" prefWidth="125.0" style="-fx-background-color: bdd067; -fx-background-radius: 20;" text="Player2" textFill="#fcfcfc" AnchorPane.rightAnchor="32.0">
+               <font>
+                  <Font size="31.0" />
+               </font>
+            </Label>
+            <Button fx:id="historyBtn" layoutX="24.0" layoutY="365.0" mnemonicParsing="false" onAction="#historyBtn" prefHeight="42.0" prefWidth="125.0" style="-fx-background-color: #c6da6c; -fx-background-radius: 20;" text="History" textFill="#fcfcfc" AnchorPane.rightAnchor="32.0">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Button>
+            <Button fx:id="recordBtn" layoutX="21.0" layoutY="5.0" mnemonicParsing="false" onAction="#recordBtn" prefHeight="50.0" prefWidth="125.0" style="-fx-background-color: #c6da6c; -fx-background-radius: 20;" text="New Game" textFill="#fcfcfc" AnchorPane.rightAnchor="32.0">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Button>
+            <Label fx:id="drawLabel" alignment="CENTER" layoutX="24.0" layoutY="270.0" prefHeight="50.0" prefWidth="125.0" style="-fx-background-color: ffe77d; -fx-background-radius: 20;" text="Draw " textFill="#fcfcfc" AnchorPane.rightAnchor="32.0">
+               <font>
+                  <Font size="31.0" />
+               </font>
+            </Label>
+            <Label fx:id="drawScore" alignment="CENTER" layoutX="24.0" layoutY="320.0" prefHeight="50.0" prefWidth="125.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="32.0">
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Button fx:id="exitGame" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#exitGame" style="-fx-background-color: #c6da6c; -fx-background-radius: 50;" text="X" />
+      <Button fx:id="btn1" layoutX="31.0" layoutY="62.0" mnemonicParsing="false" onAction="#btn1_clicked" prefHeight="98.0" prefWidth="127.0" AnchorPane.leftAnchor="31.0" AnchorPane.topAnchor="62.0">
+         <font>
+            <Font size="53.0" />
+         </font>
+      </Button>
+      <Button fx:id="btn2" layoutX="163.0" layoutY="62.0" mnemonicParsing="false" onAction="#btn2_clicked" prefHeight="98.0" prefWidth="127.0" AnchorPane.leftAnchor="163.0" AnchorPane.topAnchor="62.0">
+         <font>
+            <Font size="53.0" />
+         </font>
+      </Button>
+      <Button fx:id="btn3" layoutX="295.0" layoutY="62.0" mnemonicParsing="false" onAction="#btn3_clicked" prefHeight="98.0" prefWidth="127.0" AnchorPane.leftAnchor="295.0" AnchorPane.topAnchor="62.0">
+         <font>
+            <Font size="53.0" />
+         </font>
+      </Button>
+      <Button fx:id="btn6" layoutX="294.0" layoutY="175.0" mnemonicParsing="false" onAction="#btn6_clicked" prefHeight="98.0" prefWidth="127.0" AnchorPane.leftAnchor="295.0">
+         <font>
+            <Font size="53.0" />
+         </font>
+      </Button>
+      <Button fx:id="btn5" layoutX="161.0" layoutY="176.0" mnemonicParsing="false" onAction="#btn5__clicked" prefHeight="98.0" prefWidth="127.0" AnchorPane.leftAnchor="163.0">
+         <font>
+            <Font size="53.0" />
+         </font>
+      </Button>
+      <Button fx:id="btn4" layoutX="26.0" layoutY="176.0" mnemonicParsing="false" onAction="#btn4_clicked" prefHeight="98.0" prefWidth="127.0" AnchorPane.leftAnchor="31.0">
+         <font>
+            <Font size="53.0" />
+         </font>
+      </Button>
+      <Button fx:id="btn7" layoutX="31.0" layoutY="290.0" mnemonicParsing="false" onAction="#btn7__clicked" prefHeight="98.0" prefWidth="127.0" AnchorPane.leftAnchor="31.0">
+         <font>
+            <Font size="53.0" />
+         </font>
+      </Button>
+      <Button fx:id="btn8" layoutX="163.0" layoutY="290.0" mnemonicParsing="false" onAction="#btn8_clicked" prefHeight="98.0" prefWidth="127.0" AnchorPane.leftAnchor="163.0">
+         <font>
+            <Font size="53.0" />
+         </font>
+      </Button>
+      <Button fx:id="btn9" layoutX="295.0" layoutY="289.0" mnemonicParsing="false" onAction="#btn9" prefHeight="98.0" prefWidth="127.0" AnchorPane.leftAnchor="295.0">
+         <font>
+            <Font size="53.0" />
+         </font>
+      </Button>
+      <RadioButton fx:id="recordRadioButton" layoutX="328.0" layoutY="19.0" mnemonicParsing="false" onAction="#recordRadioBtnPressed" text="Recorded" />
+   </children>
+</AnchorPane>

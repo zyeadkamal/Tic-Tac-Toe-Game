@@ -13,24 +13,38 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.scene.Node;
+import javafx.stage.Stage;
 import tictactoegame.Alerts;
 import tictactoelibrary.*;
 import requests.*;
+
+import tictactoegame.LoginController;
+import tictactoegame.OnlinePlayerBoardController;
+import tictactoegame.OnlineTable;
+import interfaces.Views;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 
 //import user.;
 /**
  *
  * @author EmanAbobakr
  */
-public class ServerManager {
+public class ServerManager implements Runnable {
 
     private static ServerManager serverManagerObj;
 
     Socket server;
     ObjectInputStream ois;
     ObjectOutputStream oos;
+    public Views delegate;
+
+    Thread thread;
 
     private ServerManager() {
+
     }
 
     public static ServerManager getInstance() {
@@ -47,6 +61,8 @@ public class ServerManager {
             server = new Socket("localhost", 5005);
             ois = new ObjectInputStream(server.getInputStream());
             oos = new ObjectOutputStream(server.getOutputStream());
+            thread = new Thread(this);
+            thread.start();
             return true;
         } catch (IOException ex) {
             Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -54,73 +70,31 @@ public class ServerManager {
         }
     }
 
-    public String registerToServer(SignUpModel user) {
-
-        System.out.println("user nameeee " + user.getUsername());
-        System.out.println("passworddddd " + user.getPassword());
+    public void registerToServer(SignUpModel user) {
+        System.out.println("Register using: " + user.getUsername());
+        System.out.println("With Password: " + user.getPassword());
         try {
-//            server = new Socket("10.145.5.245", 5005);
-//            ois = new ObjectInputStream(server.getInputStream());
-//            oos = new ObjectOutputStream(server.getOutputStream());
             oos.writeObject(user);
-            try {
-
-                Boolean registered = new Boolean((boolean) ois.readObject());
-                if (registered) {
-                    return "You are successfully registered. Thank you.";
-                } else {
-                    return "This username is already registerd. try another username";
-                }
-                //System.out.println(registered);
-            } catch (ClassNotFoundException ex) {
-                System.out.println("catcheeeeeeeeeeeeeeeeeeeeeed one");
-                Alerts.showWarningAlert("The server is not available, but you can login later");
-                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-                return "You are successfully registered. Thank you.";
-            }
         } catch (IOException ex) {
 
             System.out.println("catcheeeeeeeeeeeeeeeeeeeeeed two");
             Alerts.showWarningAlert("The server is not available. Try later");
             Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
-            return "";
         }
-
     }
 
-    public boolean loginToServer(LoginModel user) {
-
-        System.out.println("user nameeee " + user.getUsername());
-        System.out.println("passworddddd " + user.getPassword());
+    public void loginToServer(LoginModel user) {
+        System.out.println("login using: " + user.getUsername());
+        System.out.println("with password: " + user.getPassword());
         try {
-            System.out.println("I will try");
-            //server = new Socket("10.145.5.245", 5005);
-//            server = new Socket("localhost", 5005);
-//            ois = new ObjectInputStream(server.getInputStream());
-//            oos = new ObjectOutputStream(server.getOutputStream());
             oos.writeObject(user);
-
-            //oos.writeObject("Hello ya Adel");
-            try {
-                Boolean logined = (Boolean) ois.readObject();
-                //server.close();
-                //ois.close();
-                //oos.close();
-                return logined;
-            } catch (ClassNotFoundException ex) {
-                System.out.println("catcheeeeeeeeeeeeeeeeeeeeeed three");
-                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
         } catch (IOException ex) {
             System.out.println("catcheeeeeeeeeeeeeeeeeeeeeed four");
             Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return false;
-
     }
-    
-    public void reqOnlineUsers(){
+
+    public void reqOnlineUsers() {
         String s = new String("getOnlineUser");
         try {
             oos.writeObject(s);
@@ -129,29 +103,85 @@ public class ServerManager {
         }
     }
 
-    public OnlineUsersVector getOnlineUsers() {
-        //OnlineUsers ou = new OnlineUsers();
-        OnlineUsersVector ouv;
-        try {
-            Object obj;
-            obj = ois.readObject();
-//            if(obj instanceof OnlineUsers)
-//            {
-//                ou = (OnlineUsers) obj;
-//                return ou;
-//            }
-            if(obj instanceof OnlineUsersVector)
-            {
-                ouv = (OnlineUsersVector) obj;
-                return ouv;
+    @Override
+    public void run() {
+
+        while (true) {
+            Object obj = null;
+            try {
+                obj = ois.readObject();
+                if (obj instanceof String) {
+                    String str = (String) obj;
+                    if (str.equals("signup")) {
+                        System.out.println("server send sign up");
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                //Alerts.showInformationAlert("You are successfully registered. Thank you.");
+                                delegate.navigateToNext();
+                            }
+                        });
+                    } else if (str.equals("notSignup")) {
+                        System.out.println("server send not sign up");
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                Alerts.showWarningAlert("This username is already registerd. try another username");
+                            }
+                        });
+
+                    } else if (str.equals("login")) {
+                        System.out.println("server send login");
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                //Stage stage = this.currentStageProperty().get();
+                                delegate.navigateToNext();
+                            }
+                        });
+
+                    } else if (str.equals("notLogin")) {
+                        System.out.println("server send not login");
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                Alerts.showWarningAlert("There is no Acc, Sign up");
+                            }
+                        });
+
+                    } else {
+                        System.out.println("Weird string from server");
+                        System.out.println(str);
+                    }
+
+                } else if (obj instanceof OnlineUsersVector) {
+                    System.out.println("Online users commmming");
+                    System.out.println("Online Users:");
+                    OnlineUsersVector ouv;
+                    ouv = (OnlineUsersVector) obj;
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            OnlinePlayerBoardController.ouv = ouv;
+                            OnlinePlayerBoardController.observableList.clear();
+                            for (int i = 0; i < ouv.bigOnlineUsersVec.size(); i++) {
+                                //System.out.println("Hello from server manage-online users");
+                                String str = ouv.bigOnlineUsersVec.get(i);
+                                OnlineTable oot = new OnlineTable(str);
+                                OnlinePlayerBoardController.observableList.add(oot);
+                                System.out.println(ouv.bigOnlineUsersVec.get(i));
+                            }
+                        }
+                    });
+
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
             }
-           
-        } catch (IOException ex) {
-            Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+
     }
 
 }

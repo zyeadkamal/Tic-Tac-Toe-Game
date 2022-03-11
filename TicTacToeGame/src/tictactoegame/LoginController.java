@@ -25,13 +25,18 @@ import javafx.stage.Stage;
 import tictactoelibrary.LoginModel;
 
 import validation.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import interfaces.Views;
 
 /**
  * FXML Controller class
  *
  * @author EmanAbobakr
  */
-public class LoginController implements Initializable {
+public class LoginController implements Initializable,Views {
+
+    
     
     private Stage stage;
     private Scene scene;
@@ -52,6 +57,7 @@ public class LoginController implements Initializable {
     @FXML
     private Label tagId;
     
+    ServerManager sm ;
 
     /**
      * Initializes the controller class.
@@ -59,6 +65,8 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        sm = ServerManager.getInstance();
+        sm.delegate = this;
     }
 
     public void switchToRegister(ActionEvent event) throws IOException {
@@ -78,9 +86,16 @@ public class LoginController implements Initializable {
         
     }
     
-    public void switchToBoard(Stage stage) throws IOException {
+//    public void switchToBoard(Stage stage) throws IOException {
+//        Parent root = FXMLLoader.load(getClass().getResource("OnlinePlayerBoard.fxml"));
+//        this.stage = stage;
+//        Scene scene = new Scene(root);
+//        stage.setScene(scene);
+//        stage.show();
+//        
+//    }
+    public void switchToBoard() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("OnlinePlayerBoard.fxml"));
-        this.stage = stage;
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
@@ -91,24 +106,11 @@ public class LoginController implements Initializable {
         
         SignUpValidation suv = new SignUpValidation();
         if(suv.emptyUsername(usernameId.getText()) == "" && suv.validateLoginPassword(passId.getText()) == "") {
-            //System.out.println("correct!");
-            user = new LoginModel(usernameId.getText(), Integer.parseInt(passId.getText()));
-            ServerManager sm = ServerManager.getInstance();
-            if(sm.loginToServer(user)){    
             
-                tagId.setVisible(false);
-                
-                System.out.println("logged in"); 
-                sm.reqOnlineUsers();
-                System.out.println("I send req to det online users");
-                switchToBoard((Stage)((Node)event.getSource()).getScene().getWindow());
-                
-            }
-            else {
-                tagId.setTextFill(Color.RED);
-                tagId.setText("There is no acc. Sign up b2a.");    
-                tagId.setVisible(true);
-            }
+            user = new LoginModel(usernameId.getText(), Integer.parseInt(passId.getText()));
+            
+            sm.loginToServer(user);
+            stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         }
         else {
             tagId.setTextFill(Color.RED);
@@ -117,9 +119,22 @@ public class LoginController implements Initializable {
         }
     }
     
-    
-    public void setUserInformation(String username, int pass) {
-        
+
+
+    @Override
+    public void navigateToNext() {
+        //switch to Main board
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("OnlinePlayerBoard.fxml"));
+            this.stage=(Stage) tagId.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+            //request for online users
+            sm.reqOnlineUsers();
+        } catch (IOException ex) {
+            Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

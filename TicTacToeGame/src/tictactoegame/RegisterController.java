@@ -25,13 +25,16 @@ import javafx.stage.Stage;
 import tictactoelibrary.SignUpModel;
 
 import validation.*;
+import interfaces.Views;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * FXML Controller class
  *
  * @author EmanAbobakr
  */
-public class RegisterController implements Initializable {
+public class RegisterController implements Initializable,Views {
 
     private Stage stage;
     private Scene scene;
@@ -59,6 +62,8 @@ public class RegisterController implements Initializable {
     private Label signupTagId;
 
     SignUpValidation suv;
+    
+    ServerManager sm ;
 
     /**
      * Initializes the controller class.
@@ -67,7 +72,10 @@ public class RegisterController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         suv = new SignUpValidation();
+        sm = ServerManager.getInstance();
+        sm.delegate = this;
     }
+    
 
     public void switchToLogin(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
@@ -81,29 +89,14 @@ public class RegisterController implements Initializable {
     public void registerUser(ActionEvent event) throws IOException {
 
         if (suv.emptyUsername(usernameId.getText()) == "" && suv.validateSignUpPassword(passId.getText(), conformPassId.getText()) == "") {
-            //System.out.println("correct!");
+            
             user = new SignUpModel(usernameId.getText(), Integer.parseInt(passId.getText()));
-            ServerManager sm = ServerManager.getInstance();
+            
             usernameTagId.setVisible(false);
             passwordTagId.setVisible(false);
-            signupTagId.setText(sm.registerToServer(user));
-            signupTagId.setVisible(true);
-
-//            if(sm.registerToServer(user)){    
-//            
-//                usernameTagId.setVisible(false);
-//                passwordTagId.setVisible(false);
-//                
-//                signupTagId.setTextFill(Color.GREEN);
-//                signupTagId.setText("You are successfully registered. Thank you.");    
-//                signupTagId.setVisible(true);
-//                
-//            }
-//            else {
-//                signupTagId.setTextFill(Color.RED);
-//                signupTagId.setText("This username is already registerd. try another username");    
-//                signupTagId.setVisible(true);
-//            }
+            sm.registerToServer(user);
+            
+            
         } else {
             usernameTagId.setTextFill(Color.RED);
             usernameTagId.setText(suv.emptyUsername(usernameId.getText()));
@@ -112,6 +105,19 @@ public class RegisterController implements Initializable {
             passwordTagId.setTextFill(Color.RED);
             passwordTagId.setText(suv.validateSignUpPassword(passId.getText(), conformPassId.getText()));
             passwordTagId.setVisible(true);
+        }
+    }
+
+    @Override
+    public void navigateToNext() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+            this.stage=(Stage) usernameId.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

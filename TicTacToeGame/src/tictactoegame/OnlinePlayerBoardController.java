@@ -25,7 +25,7 @@ import requests.*;
  *
  * @author MOHAMED ADEL
  */
-public class OnlinePlayerBoardController implements Initializable, Runnable {
+public class OnlinePlayerBoardController implements Initializable {
 
     @FXML
     private TableView<OnlineTable> tableViewId;
@@ -33,10 +33,13 @@ public class OnlinePlayerBoardController implements Initializable, Runnable {
     private TableColumn<OnlineTable, String> playerColId;
     @FXML
     private TableColumn<OnlineTable, String> reqColId;
+    
+    public static OnlineUsersVector ouv;
 
-    ObservableList<OnlineTable> observableList = FXCollections.observableArrayList(
+    public static ObservableList<OnlineTable> observableList = FXCollections.observableArrayList(
             
     );
+    
 
     /**
      * Initializes the controller class.
@@ -51,39 +54,10 @@ public class OnlinePlayerBoardController implements Initializable, Runnable {
         tableViewId.setItems(observableList);
         
         System.out.println("Hello from init Main Board");
-        Thread th = new Thread(this);
-        th.start();
+        
+        
     }
 
-    @Override
-    public void run() {
-        OnlineUsers ou;
-        OnlineUsersVector ouv;
 
-        while (true) {
-            System.out.println("I am waiting for onine users");
-            //ou = ServerManager.getInstance().getOnlineUsers();
-            ouv = ServerManager.getInstance().getOnlineUsers();
-            if (ouv != null) {
-                observableList.clear();
-                for (int i = 0; i < ouv.bigOnlineUsersVec.size(); i++) {
-                    String str = ouv.bigOnlineUsersVec.get(i);
-                    OnlineTable oot = new OnlineTable(str);
-
-                    observableList.add(oot);
-                    //System.out.println(ou.getOnlineUsers().get(i));
-                    //System.out.println(ouv.onlineUsersVec.get(i));
-                    System.out.println(ouv.bigOnlineUsersVec.get(i));
-                }
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                    
-                    }
-                });
-            }
-        }
-
-    }
 
 }

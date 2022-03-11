@@ -24,4 +24,15 @@ public class Alerts {
         .setContentText(s);
         alert.showAndWait();
     }
+    
+    public static void showInformationAlert(String s) {
+        Alert.AlertType type = Alert.AlertType.INFORMATION;
+        Alert alert = new Alert(type, "");
+
+        alert.initModality(Modality.APPLICATION_MODAL);
+        //alert.initOwner(stage);
+        alert.getDialogPane()
+        .setContentText(s);
+        alert.showAndWait();
+    }
 }

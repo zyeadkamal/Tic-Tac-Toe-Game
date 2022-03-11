@@ -36,7 +36,7 @@ import interfaces.OnlinePlayerBoardInterface;
 public class ServerManager implements Runnable {
 
     private static ServerManager serverManagerObj;
-
+    private String username = null;
     Socket server;
     ObjectInputStream ois;
     ObjectOutputStream oos;
@@ -90,6 +90,7 @@ public class ServerManager implements Runnable {
         System.out.println("with password: " + user.getPassword());
         try {
             oos.writeObject(user);
+            username = user.getUsername();
         } catch (IOException ex) {
             System.out.println("catcheeeeeeeeeeeeeeeeeeeeeed four");
             Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -184,10 +185,11 @@ public class ServerManager implements Runnable {
                         @Override
                         public void run() {
                             //update table view without username 
+                            ouv.bigOnlineUsersVec.remove(username);
                             OnlinePlayerBoardController.ouv = ouv;
                             OnlinePlayerBoardController.observableList.clear();
                             for (int i = 0; i < ouv.bigOnlineUsersVec.size(); i++) {
-                                //System.out.println("Hello from server manage-online users");
+                                //System.out.println("Hello from server manage-online users");                                
                                 String str = ouv.bigOnlineUsersVec.get(i);
                                 OnlineTable oot = new OnlineTable(str);
                                 OnlinePlayerBoardController.observableList.add(oot);

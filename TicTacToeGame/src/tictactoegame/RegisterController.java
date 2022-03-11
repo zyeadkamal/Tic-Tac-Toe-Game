@@ -25,16 +25,16 @@ import javafx.stage.Stage;
 import tictactoelibrary.SignUpModel;
 
 import validation.*;
-import interfaces.Views;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import interfaces.NavigationInterface;
 
 /**
  * FXML Controller class
  *
  * @author EmanAbobakr
  */
-public class RegisterController implements Initializable,Views {
+public class RegisterController implements Initializable,NavigationInterface {
 
     private Stage stage;
     private Scene scene;

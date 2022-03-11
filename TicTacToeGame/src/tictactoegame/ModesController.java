@@ -19,14 +19,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import server.ServerManager;
-import interfaces.Views;
 
 /**
  * FXML Controller class
  *
  * @author EmanAbobakr
  */
-public class ModesController implements Initializable,Views {
+public class ModesController implements Initializable{
 
     /**
      * Initializes the controller class.
@@ -95,11 +94,6 @@ public class ModesController implements Initializable,Views {
         });
         th.start();
 
-    }
-
-    @Override
-    public void navigateToNext() {
-        System.out.println("Hello from modes");
     }
 
 }

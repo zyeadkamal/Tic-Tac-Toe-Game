@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import server.ServerManager;
 import requests.*;
 
@@ -32,18 +33,23 @@ public class OnlinePlayerBoardController implements Initializable, Runnable {
     private TableColumn<OnlineTable, String> playerColId;
     @FXML
     private TableColumn<OnlineTable, String> reqColId;
-    
-    ObservableList<OnlineTable> observableList = FXCollections.observableArrayList();
+
+    ObservableList<OnlineTable> observableList = FXCollections.observableArrayList(
+            
+    );
 
     /**
      * Initializes the controller class.
      */
-    
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         //OnlinePlayerBoardController myObj = new OnlinePlayerBoardController();
+        playerColId.setCellValueFactory(new PropertyValueFactory<OnlineTable, String>("username"));
+        reqColId.setCellValueFactory(new PropertyValueFactory<OnlineTable, String>("userInGame"));
+        
+        tableViewId.setItems(observableList);
+        
         System.out.println("Hello from init Main Board");
         Thread th = new Thread(this);
         th.start();
@@ -53,30 +59,28 @@ public class OnlinePlayerBoardController implements Initializable, Runnable {
     public void run() {
         OnlineUsers ou;
         OnlineUsersVector ouv;
-        
+
         while (true) {
             System.out.println("I am waiting for onine users");
             //ou = ServerManager.getInstance().getOnlineUsers();
             ouv = ServerManager.getInstance().getOnlineUsers();
             if (ouv != null) {
+                observableList.clear();
                 for (int i = 0; i < ouv.bigOnlineUsersVec.size(); i++) {
                     String str = ouv.bigOnlineUsersVec.get(i);
                     OnlineTable oot = new OnlineTable(str);
-                    
-                    
+
                     observableList.add(oot);
                     //System.out.println(ou.getOnlineUsers().get(i));
                     //System.out.println(ouv.onlineUsersVec.get(i));
                     System.out.println(ouv.bigOnlineUsersVec.get(i));
                 }
                 Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            playerColId.setCellValueFactory(new PropertyValueFactory<OnlineTable, String>("username"));
-                            tableViewId.setItems(observableList);
-                           
-                        }
-                    });
+                    @Override
+                    public void run() {
+                    
+                    }
+                });
             }
         }
 

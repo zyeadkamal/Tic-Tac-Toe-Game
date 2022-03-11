@@ -12,7 +12,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="601.0" prefWidth="796.0" style="-fx-background-color: ed86b5;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoegame.OnlinePlayerBoardController">
    <children>
-      <Text fill="#93d2db" layoutX="262.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Players Board">
+      <Text fx:id="textId" fill="#93d2db" layoutX="262.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Players Board">
          <font>
             <Font name="Copperplate Gothic Bold" size="41.0" />
          </font>
@@ -25,7 +25,7 @@
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="486.0" prefWidth="538.0">
                            <children>
-                              <TableView fx:id="tableViewId" layoutX="109.0" layoutY="28.0" prefHeight="382.0" prefWidth="283.0">
+                              <TableView fx:id="tableViewId" editable="true" layoutX="109.0" layoutY="28.0" prefHeight="382.0" prefWidth="283.0" style="-fx-background-color: black;">
                                  <columns>
                                     <TableColumn fx:id="playerColId" prefWidth="149.60000610351562" text="Player" />
                                     <TableColumn fx:id="reqColId" prefWidth="130.39996337890625" text="Send Request" />

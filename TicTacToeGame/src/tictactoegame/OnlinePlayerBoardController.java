@@ -5,6 +5,7 @@
  */
 package tictactoegame;
 
+import interfaces.NavigateToHomeInterface;
 import interfaces.NavigationInterface;
 import interfaces.OnlinePlayerBoardInterface;
 import java.io.IOException;
@@ -38,7 +39,7 @@ import requests.*;
  *
  * @author MOHAMED ADEL
  */
-public class OnlinePlayerBoardController implements Initializable, OnlinePlayerBoardInterface {
+public class OnlinePlayerBoardController implements Initializable, OnlinePlayerBoardInterface ,NavigateToHomeInterface {
 
     @FXML
     private TableView<OnlineTable> tableViewId;
@@ -74,6 +75,7 @@ public class OnlinePlayerBoardController implements Initializable, OnlinePlayerB
         tableViewId.setItems(observableList);
         ServerManager.getInstance().onlinePlayerBoardDelegate = this;
         System.out.println("Hello from init Main Board");
+        ServerManager.getInstance().navigationDelegate = this;
         
         
     }
@@ -138,6 +140,21 @@ public class OnlinePlayerBoardController implements Initializable, OnlinePlayerB
         stage.setScene(scene);
         stage.show();
 
+    }
+
+    @Override
+    public void navigateToHome() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Modes.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) textId.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 

@@ -26,7 +26,9 @@ import tictactoegame.OnlineTable;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import interfaces.NavigationInterface;
+import interfaces.OnlineModeGameInterface;
 import interfaces.OnlinePlayerBoardInterface;
+import tictactoegame.OnlineModeGameScreenController;
 
 //import user.;
 /**
@@ -36,12 +38,13 @@ import interfaces.OnlinePlayerBoardInterface;
 public class ServerManager implements Runnable {
 
     private static ServerManager serverManagerObj;
-    private String username = null;
+    public static String username = null;
     Socket server;
     ObjectInputStream ois;
     ObjectOutputStream oos;
     public NavigationInterface delegate;
     public OnlinePlayerBoardInterface onlinePlayerBoardDelegate;
+    public OnlineModeGameInterface  onlineModeGameInterfaceDelegate;
 
     Thread thread;
 
@@ -107,6 +110,7 @@ public class ServerManager implements Runnable {
     }
     public void sendRequest(GameRequest gameRequest)
     {
+        
         try {
             oos.writeObject(gameRequest);
         } catch (IOException ex) {
@@ -118,6 +122,14 @@ public class ServerManager implements Runnable {
     {
         try {
             oos.writeObject(accept);
+        } catch (IOException ex) {
+            Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void playMove(GameMove gameMove)
+    {
+        try {
+            oos.writeObject(gameMove);
         } catch (IOException ex) {
             Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -209,6 +221,8 @@ public class ServerManager implements Runnable {
                             System.out.println("I am "+gameRequest.getRecieverPlayer());
                             System.out.println("player "+gameRequest.getStartingPlayer());
                             onlinePlayerBoardDelegate.showAlert(gameRequest);
+                            OnlineModeGameScreenController.myTic = "O";
+                            OnlineModeGameScreenController.opTic = "X";
                         }
                     });      
                     
@@ -223,8 +237,15 @@ public class ServerManager implements Runnable {
                                onlinePlayerBoardDelegate.NavigateToGame(accept);
                             }
                         });    
-                    
-                    
+                }
+                else if (obj instanceof GameMove) {
+                   GameMove move = (GameMove) obj;
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                               onlineModeGameInterfaceDelegate.updateUI(move);
+                            }
+                        });    
                 }
             } catch (IOException ex) {
                 Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);

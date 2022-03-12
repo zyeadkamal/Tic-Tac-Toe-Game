@@ -30,7 +30,7 @@ import RecordingHandler.CreatRecordFiles ;
  *
  * @author amrelshazly
  */
-public class LocalMultiPlayerController extends xoGameLogic implements Initializable {
+public class LocalMultiPlayerController extends XOGameLogic implements Initializable {
 
     int firstPlayerTurn;
     private  Stage stage ;

@@ -54,7 +54,6 @@ public class OnlinePlayerBoardController implements Initializable, OnlinePlayerB
     @FXML
     private Text textId;
 
-
     public void setUsername(String username) {
         this.username = username;
     }
@@ -89,6 +88,8 @@ public class OnlinePlayerBoardController implements Initializable, OnlinePlayerB
                 String selectedPlayer = tableViewId.getSelectionModel().getSelectedItem().getUsername();
                 System.out.println(selectedPlayer);
                 ServerManager.getInstance().sendRequest(new GameRequest(username, selectedPlayer));
+                OnlineModeGameScreenController.myTic = "X";
+                OnlineModeGameScreenController.opTic = "O";
             }
         });
     }

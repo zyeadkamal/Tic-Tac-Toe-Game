@@ -40,8 +40,6 @@ ________________________________________________________________________________
 
 ![WhatsApp Image 2022-03-12 at 9 14 18 PM](https://user-images.githubusercontent.com/66483556/158031786-4a63ce99-7140-42cb-98af-726ed4ed0052.jpeg)
 
-![WhatsApp Image 2022-03-12 at 9 14 17 PM (1)](https://user-images.githubusercontent.com/66483556/158031794-fb064218-2bb3-4057-9716-14c6e3e455d8.jpeg)
-
 ![WhatsApp Image 2022-03-12 at 9 14 17 PM](https://user-images.githubusercontent.com/66483556/158031798-151ad04f-2d4a-450c-bc4d-0cfb19cb4b34.jpeg)
 
 

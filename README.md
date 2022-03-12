@@ -10,7 +10,7 @@ ________________________________________________________________________________
 	•	Every account has the history of his games.
 	•	Every account can see his previous games.
 
-#Game Server 
+# Game Server 
 _______________________________________________________________________________________
 
 	•	The game server handles all connections between online users.

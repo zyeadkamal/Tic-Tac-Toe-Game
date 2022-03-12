@@ -23,6 +23,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
 import requests.GameMove;
+import requests.GameResult;
 import server.ServerManager;
 
 /**
@@ -303,13 +304,15 @@ public class OnlineModeGameScreenController extends XOGameLogic implements Initi
 
     public GameMove createMove(String index) {
         GameMove move = null;
-        if (ServerManager.username == player1) {
+        if (ServerManager.username.equals(player1)) {
             opName = player2;
+            System.out.println("opname: "+opName);
             move = new GameMove(ServerManager.username, player2, index);
         } else {
             opName = player1;
             move = new GameMove(ServerManager.username, player1, index);
         }
+        System.out.println("opname: "+opName);
         return move;
     }
 
@@ -318,6 +321,8 @@ public class OnlineModeGameScreenController extends XOGameLogic implements Initi
             if (myTic.equals("X")) {
                 System.out.println("you win");
                 showVideo("win", ServerManager.username);
+                ServerManager.getInstance().sendGameRes(new GameResult(ServerManager.username, opName, ServerManager.username));
+                
             }
             if (myTic.equals("O")) {
                 System.out.println("you lose");
@@ -330,6 +335,7 @@ public class OnlineModeGameScreenController extends XOGameLogic implements Initi
             }
             if (myTic.equals("O")) {
                 showVideo("win", ServerManager.username);
+                ServerManager.getInstance().sendGameRes(new GameResult(ServerManager.username, opName, ServerManager.username));
             }
             setAllButtonDisable();
         } else if (isDraw()) {

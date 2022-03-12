@@ -6,6 +6,7 @@
 package server;
 
 import com.sun.deploy.util.SessionState.Client;
+import interfaces.NavigateToHomeInterface;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -28,6 +29,7 @@ import javafx.scene.Parent;
 import interfaces.NavigationInterface;
 import interfaces.OnlineModeGameInterface;
 import interfaces.OnlinePlayerBoardInterface;
+import java.io.EOFException;
 import tictactoegame.OnlineModeGameScreenController;
 
 //import user.;
@@ -44,7 +46,8 @@ public class ServerManager implements Runnable {
     ObjectOutputStream oos;
     public NavigationInterface delegate;
     public OnlinePlayerBoardInterface onlinePlayerBoardDelegate;
-    public OnlineModeGameInterface  onlineModeGameInterfaceDelegate;
+    public OnlineModeGameInterface onlineModeGameInterfaceDelegate;
+    public NavigateToHomeInterface navigationDelegate;
 
     Thread thread;
 
@@ -70,7 +73,14 @@ public class ServerManager implements Runnable {
             thread.start();
             return true;
         } catch (IOException ex) {
-            Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    Alerts.showWarningAlert("The server is not available. Try later");
+
+                }
+            });
+            //Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
@@ -84,7 +94,7 @@ public class ServerManager implements Runnable {
 
             System.out.println("catcheeeeeeeeeeeeeeeeeeeeeed two");
             Alerts.showWarningAlert("The server is not available. Try later");
-            Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -108,33 +118,39 @@ public class ServerManager implements Runnable {
             Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void sendRequest(GameRequest gameRequest)
-    {
-        
+
+    public void sendRequest(GameRequest gameRequest) {
+
         try {
             oos.writeObject(gameRequest);
         } catch (IOException ex) {
             Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void AcceptResponse(AcceptancePlayingRequest accept)
-    {
+
+    public void AcceptResponse(AcceptancePlayingRequest accept) {
         try {
             oos.writeObject(accept);
         } catch (IOException ex) {
             Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void playMove(GameMove gameMove)
-    {
+
+    public void playMove(GameMove gameMove) {
         try {
             oos.writeObject(gameMove);
         } catch (IOException ex) {
             Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
+    public void sendGameRes(GameResult gameResult) {
+        try {
+            oos.writeObject(gameResult);
+        } catch (IOException ex) {
+            Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     @Override
     public void run() {
@@ -182,8 +198,7 @@ public class ServerManager implements Runnable {
                             }
                         });
 
-                    } 
-                    else {
+                    } else {
                         System.out.println("Weird string from server");
                         System.out.println(str);
                     }
@@ -209,8 +224,7 @@ public class ServerManager implements Runnable {
                             }
                         }
                     });
-                }                
-                else if (obj instanceof GameRequest) {
+                } else if (obj instanceof GameRequest) {
                     System.out.println("Recieve Request");
                     GameRequest gameRequest = (GameRequest) obj;
 //                    System.out.println("I am "+gameRequest.getRecieverPlayer());
@@ -218,35 +232,48 @@ public class ServerManager implements Runnable {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            System.out.println("I am "+gameRequest.getRecieverPlayer());
-                            System.out.println("player "+gameRequest.getStartingPlayer());
+                            System.out.println("I am " + gameRequest.getRecieverPlayer());
+                            System.out.println("player " + gameRequest.getStartingPlayer());
                             onlinePlayerBoardDelegate.showAlert(gameRequest);
                             OnlineModeGameScreenController.myTic = "O";
                             OnlineModeGameScreenController.opTic = "X";
                         }
-                    });      
-                    
-                    
+                    });
+
+                } else if (obj instanceof AcceptancePlayingRequest) {
+                    AcceptancePlayingRequest accept = (AcceptancePlayingRequest) obj;
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            onlinePlayerBoardDelegate.NavigateToGame(accept);
+                        }
+                    });
+                } else if (obj instanceof GameMove) {
+                    GameMove move = (GameMove) obj;
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            onlineModeGameInterfaceDelegate.updateUI(move);
+                        }
+                    });
                 }
-                
-                else if (obj instanceof AcceptancePlayingRequest) {
-                   AcceptancePlayingRequest accept = (AcceptancePlayingRequest) obj;
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                               onlinePlayerBoardDelegate.NavigateToGame(accept);
-                            }
-                        });    
-                }
-                else if (obj instanceof GameMove) {
-                   GameMove move = (GameMove) obj;
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                               onlineModeGameInterfaceDelegate.updateUI(move);
-                            }
-                        });    
-                }
+            } catch (EOFException ex) {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Alerts.showWarningAlert("The server is closed now");
+                            ois.close();
+                            oos.close();
+                            thread.stop();
+                            navigationDelegate.navigateToHome();
+                        } catch (IOException ex1) {
+                            Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex1);
+                        }
+
+                    }
+                });
+                break;
             } catch (IOException ex) {
                 Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {

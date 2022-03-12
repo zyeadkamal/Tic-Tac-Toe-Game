@@ -5,6 +5,7 @@
  */
 package tictactoegame;
 
+import interfaces.NavigateToHomeInterface;
 import server.ServerManager;
 import java.io.IOException;
 import java.net.URL;
@@ -34,7 +35,7 @@ import interfaces.NavigationInterface;
  *
  * @author EmanAbobakr
  */
-public class RegisterController implements Initializable,NavigationInterface {
+public class RegisterController implements Initializable,NavigationInterface, NavigateToHomeInterface {
 
     private Stage stage;
     private Scene scene;
@@ -121,4 +122,21 @@ public class RegisterController implements Initializable,NavigationInterface {
         }
     }
 
+    @Override
+    public void navigateToHome() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Modes.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) signupTagId.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+
 }
+

@@ -48,14 +48,29 @@ public class OnlinePlayerBoardController implements Initializable, OnlinePlayerB
     @FXML
     private TableColumn<OnlineTable, String> reqColId;
     
+    
+    @FXML
+    private Text textId;
+    @FXML
+    private TableView<MiniScoreTable> scoresTableview;
+    @FXML
+    private TableColumn<MiniScoreTable, String> playerId;
+    @FXML
+    private TableColumn<MiniScoreTable, String> scoresId;
+    
     public static OnlineUsersVector ouv;
 
     public static ObservableList<OnlineTable> observableList = FXCollections.observableArrayList(
             
     );
-     private String username;
-    @FXML
-    private Text textId;
+    
+    public static ObservableList<MiniScoreTable> scoresObservableList = FXCollections.observableArrayList(
+            
+    );
+    
+    private String username;
+    
+    
 
     public void setUsername(String username) {
         this.username = username;
@@ -77,7 +92,7 @@ public class OnlinePlayerBoardController implements Initializable, OnlinePlayerB
         System.out.println("Hello from init Main Board");
         ServerManager.getInstance().navigationDelegate = this;
         
-        
+        setupScoretable();  
     }
 
     public String getUsername() {
@@ -155,6 +170,12 @@ public class OnlinePlayerBoardController implements Initializable, OnlinePlayerB
         } catch (IOException ex) {
             Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void setupScoretable(){
+        playerId.setCellValueFactory(new PropertyValueFactory<MiniScoreTable, String>("username"));
+        scoresId.setCellValueFactory(new PropertyValueFactory<MiniScoreTable, String>("score"));
+        scoresTableview.setItems(scoresObservableList);
     }
 
 

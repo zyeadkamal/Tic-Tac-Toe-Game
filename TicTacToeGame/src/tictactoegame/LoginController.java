@@ -134,6 +134,7 @@ public class LoginController implements Initializable, NavigationInterface , Nav
             stage.setScene(scene);
             stage.show();
             sm.reqOnlineUsers();
+            sm.reqScoreTable();
         } catch (IOException ex) {
             Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
         }

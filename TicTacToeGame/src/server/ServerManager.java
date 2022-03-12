@@ -33,6 +33,7 @@ import java.io.EOFException;
 import tictactoegame.OnlineModeGameScreenController;
 import java.io.EOFException;
 import java.net.ConnectException;
+import tictactoegame.MiniScoreTable;
 
 //import user.;
 /**
@@ -117,6 +118,15 @@ public class ServerManager implements Runnable {
 
     public void reqOnlineUsers() {
         String s = new String("getOnlineUser");
+        try {
+            oos.writeObject(s);
+        } catch (IOException ex) {
+            Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void reqScoreTable() {
+        String s = new String("scoreTable");
         try {
             oos.writeObject(s);
         } catch (IOException ex) {
@@ -227,6 +237,30 @@ public class ServerManager implements Runnable {
                                 OnlinePlayerBoardController.observableList.add(oot);
                                 System.out.println(ouv.bigOnlineUsersVec.get(i));
                             }
+                        }
+                    });
+                } else if (obj instanceof ScoreTable) {
+                    System.out.println("Score table commmming");                 
+                    ScoreTable st;
+                    st = (ScoreTable) obj;
+                    System.out.println("Score Table:");
+                    System.out.println(st.scores);
+                    
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            //update score table view
+
+                            OnlinePlayerBoardController.scoresObservableList.clear();
+                            for(String k : st.scores.keySet()){
+                                MiniScoreTable mst = new MiniScoreTable();
+                                mst.setUsername(k);
+                                mst.setScore(st.scores.get(k));
+                                System.out.println(mst.getUsername());
+                                System.out.println(mst.getScore());
+                                OnlinePlayerBoardController.scoresObservableList.add(mst);
+                                
+                            }                           
                         }
                     });
                 } else if (obj instanceof GameRequest) {

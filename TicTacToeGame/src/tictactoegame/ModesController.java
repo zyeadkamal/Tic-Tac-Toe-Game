@@ -62,7 +62,6 @@ public class ModesController implements Initializable{
         Thread th = new Thread(new Runnable() {
             public void run() {
                 if (ServerManager.getInstance().connectToServer()) {
-
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {

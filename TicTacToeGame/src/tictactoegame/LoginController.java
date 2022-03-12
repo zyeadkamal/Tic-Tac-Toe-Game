@@ -67,6 +67,7 @@ public class LoginController implements Initializable, NavigationInterface {
         sm.delegate = this;
     }
 
+    @FXML
     public void switchToRegister(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("Register.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -84,18 +85,21 @@ public class LoginController implements Initializable, NavigationInterface {
 
     }
 
+    @FXML
     public void loginUser(ActionEvent event) throws IOException {
 
         SignUpValidation suv = new SignUpValidation();
         if (suv.emptyUsername(usernameId.getText()) == "" && suv.validateLoginPassword(passId.getText()) == "") {
-
+            tagId.setVisible(false);
             user = new LoginModel(usernameId.getText(), Integer.parseInt(passId.getText()));
 
             sm.loginToServer(user);
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         } else {
+            System.out.println("Invalid Login");
             tagId.setTextFill(Color.RED);
-            tagId.setText(suv.emptyUsername(usernameId.getText()));
+            //tagId.setText(suv.emptyUsername(usernameId.getText()));
+            tagId.setText("Invalid Login");
             tagId.setVisible(true);
         }
     }
@@ -131,6 +135,16 @@ public class LoginController implements Initializable, NavigationInterface {
         } catch (IOException ex) {
             Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    @FXML
+    public void back(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("Modes.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
     }
 
 }

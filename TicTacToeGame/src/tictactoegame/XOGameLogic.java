@@ -9,13 +9,13 @@ package tictactoegame;
  *
  * @author amrelshazly
  */
-public class xoGameLogic {
+public class XOGameLogic {
 
     public String xPlayer, oPlayer;
     public int xPlayerScore, oPlayerScore;
     public String[][] xoArr;
     boolean xWin = false , oWin  = false;
-    public xoGameLogic() {
+    public XOGameLogic() {
         
         xPlayer = "X";
         oPlayer = "O";

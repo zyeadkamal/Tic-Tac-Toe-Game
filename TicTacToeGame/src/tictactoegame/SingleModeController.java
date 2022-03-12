@@ -493,28 +493,19 @@ public class SingleModeController implements Initializable {
     }
     
     private void showVideo(String winnerName, String name) {
-        //System.out.println("217");
+        
         FXMLLoader Loader = new FXMLLoader(getClass().getResource("ConclusionVideo.fxml"));
-        //Parent root = null;
         try {
-            //System.out.println("221");
             root = Loader.load();
-            //System.out.println("223");
         } catch (IOException ex) {
             Logger.getLogger(LocalMultiPlayerController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //System.out.println("227");
         ConclusionVideoController conclusionVideoController = Loader.getController();
-        //System.out.println("229");
         conclusionVideoController.setWinnerNameLabel(winnerName,name);
-        //System.out.println("231"); 
         stage = new Stage();
-        //System.out.println("233");
         stage.setScene(new Scene(root));
-        //System.out.println("235");
         stage.show();
         stage.setResizable(false);
-        //System.out.println("237");
     }
      
     

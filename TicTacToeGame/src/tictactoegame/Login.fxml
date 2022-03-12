@@ -20,6 +20,7 @@
                   <Image url="@../Images/logo.png" />
                </image>
             </ImageView>
+            <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 50; -fx-background-color: #c6da6c;" text="X" />
          </children>
       </AnchorPane>
    </left>

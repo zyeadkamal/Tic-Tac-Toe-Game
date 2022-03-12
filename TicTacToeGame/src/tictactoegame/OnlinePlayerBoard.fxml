@@ -36,6 +36,20 @@
                         </AnchorPane>
                      </content>
                   </Tab>
+                  <Tab text="Scores">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="486.0" prefWidth="538.0">
+                           <children>
+                              <TableView fx:id="scoresTableview" editable="true" layoutX="109.0" layoutY="28.0" prefHeight="382.0" prefWidth="283.0" style="-fx-background-color: ffe77d;">
+                                 <columns>
+                                    <TableColumn fx:id="playerId" prefWidth="149.60000610351562" text="Player" />
+                                    <TableColumn fx:id="scoresId" prefWidth="130.39996337890625" text="Score" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
                </tabs>
             </TabPane>
          </children>

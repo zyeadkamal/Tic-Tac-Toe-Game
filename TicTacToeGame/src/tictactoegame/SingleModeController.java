@@ -85,6 +85,8 @@ public class SingleModeController implements Initializable {
     private Label drawScore;
     @FXML
     private RadioButton recordRadioButton;
+    @FXML
+    private Label turnLabal;
 
     public SingleModeController() {
         
@@ -268,8 +270,10 @@ public class SingleModeController implements Initializable {
     public void changeTurn() {
         if (whosTurn) {
             whosTurn = false;
+            turnLabal.setText("your Turn");
         } else {
             whosTurn = true;
+            turnLabal.setText("PC Turn");
         }
     }
     

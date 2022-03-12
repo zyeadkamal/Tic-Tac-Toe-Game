@@ -27,6 +27,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import interfaces.NavigationInterface;
 import interfaces.OnlinePlayerBoardInterface;
+import java.io.EOFException;
+import java.net.ConnectException;
 
 //import user.;
 /**
@@ -69,7 +71,10 @@ public class ServerManager implements Runnable {
         } catch (IOException ex) {
             Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
             return false;
-        }
+        } 
+//catch(ConnectException ex) {
+//            
+//        }
     }
 
     public void registerToServer(SignUpModel user) {
@@ -137,8 +142,8 @@ public class ServerManager implements Runnable {
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
-                                //Alerts.showInformationAlert("You are successfully registered. Thank you.");
-                                delegate.navigateToNext();
+                                Alerts.showInformationAlert("You are successfully registered. Thank you.");
+                                //delegate.navigateToNext();
                             }
                         });
                     } else if (str.equals("notSignup")) {
@@ -224,11 +229,14 @@ public class ServerManager implements Runnable {
                     
                     
                 }
+            } catch (EOFException ex) {
+                System.out.println("I am EOException 229");
+                Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
                 Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            } 
         }
 
     }

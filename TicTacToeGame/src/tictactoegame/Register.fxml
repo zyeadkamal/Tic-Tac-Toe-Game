@@ -20,6 +20,7 @@
                   <Image url="@../Images/logo.png" />
                </image>
             </ImageView>
+            <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 50; -fx-background-color: #c6da6c;" text="X" />
          </children>
       </AnchorPane>
    </left>
@@ -53,12 +54,12 @@
                   <Font size="12.0" />
                </font>
             </Label>
-            <Label fx:id="usernameTagId" layoutX="391.0" layoutY="194.0" text="Invalid username" textAlignment="CENTER" textFill="RED" visible="false">
+            <Label fx:id="usernameTagId" layoutX="233.0" layoutY="202.0" text="Invalid username" textAlignment="CENTER" textFill="RED" visible="false">
                <font>
                   <Font size="12.0" />
                </font>
             </Label>
-            <Label fx:id="passwordTagId" layoutX="392.0" layoutY="250.0" text="passwordTagId" textFill="RED" visible="false">
+            <Label fx:id="passwordTagId" layoutX="237.0" layoutY="260.0" text="passwordTagId" textFill="RED" visible="false">
                <font>
                   <Font size="12.0" />
                </font>

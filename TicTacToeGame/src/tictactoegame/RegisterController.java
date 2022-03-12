@@ -44,8 +44,6 @@ public class RegisterController implements Initializable,NavigationInterface {
 
     @FXML
     private Button signInId;
-    @FXML
-    private Button switchToLogin;
 
     @FXML
     private TextField usernameId;
@@ -64,6 +62,8 @@ public class RegisterController implements Initializable,NavigationInterface {
     SignUpValidation suv;
     
     ServerManager sm ;
+    @FXML
+    private Button loginId;
 
     /**
      * Initializes the controller class.
@@ -77,6 +77,7 @@ public class RegisterController implements Initializable,NavigationInterface {
     }
     
 
+    @FXML
     public void switchToLogin(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -86,6 +87,7 @@ public class RegisterController implements Initializable,NavigationInterface {
 
     }
 
+    @FXML
     public void registerUser(ActionEvent event) throws IOException {
 
         if (suv.emptyUsername(usernameId.getText()) == "" && suv.validateSignUpPassword(passId.getText(), conformPassId.getText()) == "") {
@@ -119,6 +121,16 @@ public class RegisterController implements Initializable,NavigationInterface {
         } catch (IOException ex) {
             Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    @FXML
+    public void back(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("Modes.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
     }
 
 }

@@ -51,6 +51,7 @@ public class ServerManager implements Runnable {
     public OnlinePlayerBoardInterface onlinePlayerBoardDelegate;
     public OnlineModeGameInterface onlineModeGameInterfaceDelegate;
     public NavigateToHomeInterface navigationDelegate;
+    public static String opponentName = null;
 
     Thread thread;
 
@@ -85,7 +86,7 @@ public class ServerManager implements Runnable {
             });
             //Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
             return false;
-        } 
+        }
 //catch(ConnectException ex) {
 //            
 //        }
@@ -124,7 +125,7 @@ public class ServerManager implements Runnable {
             Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void reqScoreTable() {
         String s = new String("scoreTable");
         try {
@@ -135,6 +136,9 @@ public class ServerManager implements Runnable {
     }
 
     public void sendRequest(GameRequest gameRequest) {
+        opponentName = gameRequest.getRecieverPlayer();
+        System.out.println(opponentName + "jsadasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd");
+                System.out.println(ServerManager.username);
 
         try {
             oos.writeObject(gameRequest);
@@ -144,6 +148,10 @@ public class ServerManager implements Runnable {
     }
 
     public void AcceptResponse(AcceptancePlayingRequest accept) {
+        opponentName = accept.getPlayer1();
+        System.out.println(opponentName + "jsadasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd");
+        System.out.println("server.ServerManager.AcceptResponse()");
+        System.out.println(ServerManager.username);
         try {
             oos.writeObject(accept);
         } catch (IOException ex) {
@@ -162,6 +170,14 @@ public class ServerManager implements Runnable {
     public void sendGameRes(GameResult gameResult) {
         try {
             oos.writeObject(gameResult);
+        } catch (IOException ex) {
+            Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void surrenderMsg(ExitFromGame exitFromGame) {
+        try {
+            oos.writeObject(exitFromGame);
         } catch (IOException ex) {
             Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -233,41 +249,42 @@ public class ServerManager implements Runnable {
                             for (int i = 0; i < ouv.bigOnlineUsersVec.size(); i++) {
                                 //System.out.println("Hello from server manage-online users");                                
                                 String str = ouv.bigOnlineUsersVec.get(i);
-                                OnlineTable oot = new OnlineTable(str);
-                                OnlinePlayerBoardController.observableList.add(oot);
-                                System.out.println(ouv.bigOnlineUsersVec.get(i));
+                                if (str != null) {
+                                    OnlineTable oot = new OnlineTable(str);
+                                    OnlinePlayerBoardController.observableList.add(oot);
+                                    System.out.println(ouv.bigOnlineUsersVec.get(i));
+                                }
+
                             }
                         }
                     });
                 } else if (obj instanceof ScoreTable) {
-                    System.out.println("Score table commmming");                 
+                    System.out.println("Score table commmming");
                     ScoreTable st;
                     st = (ScoreTable) obj;
                     System.out.println("Score Table:");
                     System.out.println(st.scores);
-                    
+
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
                             //update score table view
 
                             OnlinePlayerBoardController.scoresObservableList.clear();
-                            for(String k : st.scores.keySet()){
+                            for (String k : st.scores.keySet()) {
                                 MiniScoreTable mst = new MiniScoreTable();
                                 mst.setUsername(k);
                                 mst.setScore(st.scores.get(k));
                                 System.out.println(mst.getUsername());
                                 System.out.println(mst.getScore());
                                 OnlinePlayerBoardController.scoresObservableList.add(mst);
-                                
-                            }                           
+
+                            }
                         }
                     });
                 } else if (obj instanceof GameRequest) {
                     System.out.println("Recieve Request");
                     GameRequest gameRequest = (GameRequest) obj;
-//                    System.out.println("I am "+gameRequest.getRecieverPlayer());
-//                    System.out.println("player"+gameRequest.getStartingPlayer());
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
@@ -295,6 +312,15 @@ public class ServerManager implements Runnable {
                             onlineModeGameInterfaceDelegate.updateUI(move);
                         }
                     });
+                } else if (obj instanceof ExitFromGame) {
+                    ExitFromGame exit = (ExitFromGame) obj;
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            Alerts.showWarningAlert("Congratulations your opponent has withdrawn");
+                            onlineModeGameInterfaceDelegate.navigateToOnlineBoard();
+                        }
+                    });
                 }
             } catch (EOFException ex) {
                 Platform.runLater(new Runnable() {
@@ -317,7 +343,7 @@ public class ServerManager implements Runnable {
                 Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
-            } 
+            }
         }
 
     }

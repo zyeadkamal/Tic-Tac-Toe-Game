@@ -69,6 +69,7 @@ public class OnlinePlayerBoardController implements Initializable, OnlinePlayerB
     );
     
     private String username;
+    public static String opponentName;
     
     
 
@@ -136,7 +137,6 @@ public class OnlinePlayerBoardController implements Initializable, OnlinePlayerB
             OnlineModeGameScreenController onlineModeGameScreenController = loader.getController();
             onlineModeGameScreenController.setPlayer1(accept.getPlayer1());
             onlineModeGameScreenController.setPlayer2(accept.getPlayer2());
-            
             Stage stage = (Stage) textId.getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);

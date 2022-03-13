@@ -85,7 +85,7 @@ public class ServerManager implements Runnable {
             });
             //Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
             return false;
-        } 
+        }
 //catch(ConnectException ex) {
 //            
 //        }
@@ -116,15 +116,36 @@ public class ServerManager implements Runnable {
         }
     }
 
-    public void reqOnlineUsers() {
-        String s = new String("getOnlineUser");
+    public void logout() {
+        System.out.println("I asked to logout");
+        String s = new String("logout");
         try {
             oos.writeObject(s);
+            oos.close();
+            ois.close();
+//            Platform.runLater(new Runnable() {
+//                @Override
+//                public void run() {
+//                    navigationDelegate.navigateToHome();
+//                }
+//            });
+            thread.stop();
+
         } catch (IOException ex) {
             Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
+    public void reqOnlineUsers() {
+        String s = new String("getOnlineUser");
+        try {
+            oos.writeObject(s);
+
+        } catch (IOException ex) {
+            Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public void reqScoreTable() {
         String s = new String("scoreTable");
         try {
@@ -204,6 +225,15 @@ public class ServerManager implements Runnable {
                             }
                         });
 
+                    }else if (str.equals("alreadyLogin")) {
+                        System.out.println("server send already login");
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                Alerts.showWarningAlert("This Acc is already login");
+                            }
+                        });
+
                     } else if (str.equals("notLogin")) {
                         System.out.println("server send not login");
                         Platform.runLater(new Runnable() {
@@ -240,27 +270,25 @@ public class ServerManager implements Runnable {
                         }
                     });
                 } else if (obj instanceof ScoreTable) {
-                    System.out.println("Score table commmming");                 
+                    System.out.println("Score table commmming");
                     ScoreTable st;
                     st = (ScoreTable) obj;
                     System.out.println("Score Table:");
                     System.out.println(st.scores);
-                    
+
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
                             //update score table view
 
                             OnlinePlayerBoardController.scoresObservableList.clear();
-                            for(String k : st.scores.keySet()){
+                            for (String k : st.scores.keySet()) {
                                 MiniScoreTable mst = new MiniScoreTable();
                                 mst.setUsername(k);
                                 mst.setScore(st.scores.get(k));
-                                System.out.println(mst.getUsername());
-                                System.out.println(mst.getScore());
                                 OnlinePlayerBoardController.scoresObservableList.add(mst);
-                                
-                            }                           
+
+                            }
                         }
                     });
                 } else if (obj instanceof GameRequest) {
@@ -301,6 +329,7 @@ public class ServerManager implements Runnable {
                     @Override
                     public void run() {
                         try {
+                            System.out.println("Herrrrrrrre");
                             Alerts.showWarningAlert("The server is closed now");
                             ois.close();
                             oos.close();
@@ -317,7 +346,7 @@ public class ServerManager implements Runnable {
                 Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
-            } 
+            }
         }
 
     }

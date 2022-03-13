@@ -80,16 +80,7 @@ public class ModesController implements Initializable{
                         }
                     });
 
-                } else {
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            Alerts.showWarningAlert("The server is not available. Try later");
-                        }
-                        
-                    });
-                    
-                }
+                }                       
             }
         });
         th.start();

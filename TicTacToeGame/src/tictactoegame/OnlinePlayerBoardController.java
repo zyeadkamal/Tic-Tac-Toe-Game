@@ -149,6 +149,7 @@ public class OnlinePlayerBoardController implements Initializable, OnlinePlayerB
     @FXML
     public void back(ActionEvent event) throws IOException {
         System.out.println("Logout btn is pressed");
+        ServerManager.getInstance().logout();
         Parent root = FXMLLoader.load(getClass().getResource("Modes.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);

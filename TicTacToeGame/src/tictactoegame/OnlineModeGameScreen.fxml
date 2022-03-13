@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="427.0" prefWidth="642.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoegame.OnlineModeGameScreenController">
+<AnchorPane id="AnchorPane" prefHeight="427.0" prefWidth="642.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoegame.OnlineModeGameScreenController">
    <children>
       <AnchorPane layoutX="461.0" prefHeight="427.0" prefWidth="181.0" style="-fx-background-color: e47dac;">
          <children>
@@ -52,7 +56,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <Button fx:id="exitGame" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#exitGame" style="-fx-background-color: #c6da6c; -fx-background-radius: 50;" text="X" />
+      <Button fx:id="exitGame" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#exitGameClicked" style="-fx-background-color: #c6da6c; -fx-background-radius: 50;" text="X" />
       <Button fx:id="btn1" layoutX="31.0" layoutY="62.0" mnemonicParsing="false" onAction="#btn1_clicked" prefHeight="98.0" prefWidth="127.0" AnchorPane.leftAnchor="31.0" AnchorPane.topAnchor="62.0">
          <font>
             <Font size="53.0" />

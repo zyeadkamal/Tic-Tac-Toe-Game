@@ -27,6 +27,7 @@ import requests.GameResult;
 import server.ServerManager;
 import RecordingHandler.CreatRecordFiles;
 import javafx.scene.Node;
+import requests.*;
 
 /**
  * FXML Controller class
@@ -81,6 +82,7 @@ public class OnlineModeGameScreenController extends XOGameLogic implements Initi
      */
     private String player1;
     private String player2;
+    boolean isGameRunning;
 
     private Stage stage;
     private Scene scene;
@@ -126,32 +128,28 @@ public class OnlineModeGameScreenController extends XOGameLogic implements Initi
         arrButton[6] = btn7;
         arrButton[7] = btn8;
         arrButton[8] = btn9;
-        
+
         isRecorded = false;
+        isGameRunning = true;
 
     }
 
     @FXML
     private void historyBtn(ActionEvent event) {
-        
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("GamesRecordsTable.fxml"));
             root = loader.load();
-            GamesRecordsTableController gamesRecordsTableController = loader.getController() ;
+            GamesRecordsTableController gamesRecordsTableController = loader.getController();
             gamesRecordsTableController.setType("online-mode");
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow() ;
-            scene = new Scene(root) ;
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
         } catch (IOException ex) {
             Logger.getLogger(OnlineModeGameScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-    }
 
-
-    @FXML
-    private void exitGame(ActionEvent event) {
     }
 
     @FXML
@@ -380,6 +378,7 @@ public class OnlineModeGameScreenController extends XOGameLogic implements Initi
             }
 
             setAllButtonDisable();
+            isGameRunning = false;
         } else if (isOWin()) {
             if (myTic.equals("X")) {
                 showVideo("lose", ServerManager.username);
@@ -392,12 +391,14 @@ public class OnlineModeGameScreenController extends XOGameLogic implements Initi
                 RecordingHandler.CreatRecordFiles.writeFile(player1 + "." + player2 + "," + gameRecord, "online-mode", player1 + " vs " + player2);
             }
             setAllButtonDisable();
+            isGameRunning = false;
         } else if (isDraw()) {
             showVideo("tied", "");
             setAllButtonDisable();
             if (isRecorded) {
                 RecordingHandler.CreatRecordFiles.writeFile(player1 + "." + player2 + "," + gameRecord, "online-mode", player1 + " vs " + player2);
             }
+            isGameRunning = false;
         }
     }
 
@@ -436,4 +437,30 @@ public class OnlineModeGameScreenController extends XOGameLogic implements Initi
     private void newGamePressed(ActionEvent event) {
     }
 
+    @FXML
+    private void exitGameClicked(ActionEvent event) {
+        
+        toOnlineBoard();
+        ServerManager.getInstance().surrenderMsg(new ExitFromGame(ServerManager.username,ServerManager.opponentName , isGameRunning));
+
+    }
+
+    @Override
+    public void navigateToOnlineBoard() {
+
+        toOnlineBoard();
+    }
+
+    void toOnlineBoard() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("OnlinePlayerBoard.fxml"));
+            stage = (Stage) userScore.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+            stage.setResizable(false);
+        } catch (IOException ex) {
+            Logger.getLogger(OnlineModeGameScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

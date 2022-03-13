@@ -13,5 +13,6 @@ import requests.GameMove;
  */
 public interface OnlineModeGameInterface {
     abstract void updateUI(GameMove move);
+    abstract void navigateToOnlineBoard();
     
 }

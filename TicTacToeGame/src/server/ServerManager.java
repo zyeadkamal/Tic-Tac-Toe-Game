@@ -51,6 +51,7 @@ public class ServerManager implements Runnable {
     public OnlinePlayerBoardInterface onlinePlayerBoardDelegate;
     public OnlineModeGameInterface onlineModeGameInterfaceDelegate;
     public NavigateToHomeInterface navigationDelegate;
+    public static String opponentName = null;
 
     Thread thread;
 
@@ -156,6 +157,9 @@ public class ServerManager implements Runnable {
     }
 
     public void sendRequest(GameRequest gameRequest) {
+        opponentName = gameRequest.getRecieverPlayer();
+        System.out.println(opponentName + "jsadasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd");
+                System.out.println(ServerManager.username);
 
         try {
             oos.writeObject(gameRequest);
@@ -165,6 +169,10 @@ public class ServerManager implements Runnable {
     }
 
     public void AcceptResponse(AcceptancePlayingRequest accept) {
+        opponentName = accept.getPlayer1();
+        System.out.println(opponentName + "jsadasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd");
+        System.out.println("server.ServerManager.AcceptResponse()");
+        System.out.println(ServerManager.username);
         try {
             oos.writeObject(accept);
         } catch (IOException ex) {
@@ -183,6 +191,14 @@ public class ServerManager implements Runnable {
     public void sendGameRes(GameResult gameResult) {
         try {
             oos.writeObject(gameResult);
+        } catch (IOException ex) {
+            Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void surrenderMsg(ExitFromGame exitFromGame) {
+        try {
+            oos.writeObject(exitFromGame);
         } catch (IOException ex) {
             Logger.getLogger(ServerManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -263,9 +279,12 @@ public class ServerManager implements Runnable {
                             for (int i = 0; i < ouv.bigOnlineUsersVec.size(); i++) {
                                 //System.out.println("Hello from server manage-online users");                                
                                 String str = ouv.bigOnlineUsersVec.get(i);
-                                OnlineTable oot = new OnlineTable(str);
-                                OnlinePlayerBoardController.observableList.add(oot);
-                                System.out.println(ouv.bigOnlineUsersVec.get(i));
+                                if (str != null) {
+                                    OnlineTable oot = new OnlineTable(str);
+                                    OnlinePlayerBoardController.observableList.add(oot);
+                                    System.out.println(ouv.bigOnlineUsersVec.get(i));
+                                }
+
                             }
                         }
                     });
@@ -294,8 +313,6 @@ public class ServerManager implements Runnable {
                 } else if (obj instanceof GameRequest) {
                     System.out.println("Recieve Request");
                     GameRequest gameRequest = (GameRequest) obj;
-//                    System.out.println("I am "+gameRequest.getRecieverPlayer());
-//                    System.out.println("player"+gameRequest.getStartingPlayer());
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
@@ -321,6 +338,15 @@ public class ServerManager implements Runnable {
                         @Override
                         public void run() {
                             onlineModeGameInterfaceDelegate.updateUI(move);
+                        }
+                    });
+                } else if (obj instanceof ExitFromGame) {
+                    ExitFromGame exit = (ExitFromGame) obj;
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            Alerts.showWarningAlert("Congratulations your opponent has withdrawn");
+                            onlineModeGameInterfaceDelegate.navigateToOnlineBoard();
                         }
                     });
                 }

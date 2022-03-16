@@ -96,9 +96,9 @@ public class GamesRecordsTableController implements Initializable {
               dir = "savedOnlineGame";
         }
         
-        File folder = new File("record/"+dir);
-        System.out.println("record/"+dir);
-        selectedFile = selectedFile.concat("record/"+dir);
+        File folder = new File("C:/record/"+dir);
+        System.out.println("C:/record/"+dir);
+        selectedFile = selectedFile.concat("C:/record/"+dir);
 
         File[] listOfFiles = folder.listFiles();
 

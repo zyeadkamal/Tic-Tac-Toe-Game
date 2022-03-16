@@ -29,13 +29,15 @@ import validation.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import interfaces.NavigationInterface;
+import javafx.event.EventHandler;
+import javafx.stage.WindowEvent;
 
 /**
  * FXML Controller class
  *
  * @author EmanAbobakr
  */
-public class LoginController implements Initializable, NavigationInterface , NavigateToHomeInterface{
+public class LoginController implements Initializable, NavigationInterface, NavigateToHomeInterface {
 
     private Stage stage;
     private Scene scene;
@@ -76,6 +78,14 @@ public class LoginController implements Initializable, NavigationInterface , Nav
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent we) {
+                System.out.println("User closed from sign up");
+                ServerManager.getInstance().logout();
+                stage.close();
+            }
+
+        });
 
     }
 
@@ -133,13 +143,22 @@ public class LoginController implements Initializable, NavigationInterface , Nav
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                public void handle(WindowEvent we) {
+                    System.out.println("User closed from onlineplayboard");
+                    ServerManager.getInstance().logout();
+                    stage.close();
+                }
+
+            });
+
             sm.reqOnlineUsers();
             sm.reqScoreTable();
         } catch (IOException ex) {
             Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @FXML
     public void back(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("Modes.fxml"));
@@ -153,7 +172,7 @@ public class LoginController implements Initializable, NavigationInterface , Nav
     @Override
     public void navigateToHome() {
         try {
-            
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Modes.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) tagId.getScene().getWindow();

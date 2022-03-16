@@ -31,6 +31,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import server.ServerManager;
 import requests.*;
 
@@ -39,7 +40,7 @@ import requests.*;
  *
  * @author MOHAMED ADEL
  */
-public class OnlinePlayerBoardController implements Initializable, OnlinePlayerBoardInterface ,NavigateToHomeInterface {
+public class OnlinePlayerBoardController implements Initializable, OnlinePlayerBoardInterface, NavigateToHomeInterface {
 
     @FXML
     private TableView<OnlineTable> tableViewId;
@@ -47,8 +48,7 @@ public class OnlinePlayerBoardController implements Initializable, OnlinePlayerB
     private TableColumn<OnlineTable, String> playerColId;
     @FXML
     private TableColumn<OnlineTable, String> reqColId;
-    
-    
+
     @FXML
     private Text textId;
     @FXML
@@ -57,26 +57,19 @@ public class OnlinePlayerBoardController implements Initializable, OnlinePlayerB
     private TableColumn<MiniScoreTable, String> playerId;
     @FXML
     private TableColumn<MiniScoreTable, String> scoresId;
-    
+
     public static OnlineUsersVector ouv;
 
-    public static ObservableList<OnlineTable> observableList = FXCollections.observableArrayList(
-            
-    );
-    
-    public static ObservableList<MiniScoreTable> scoresObservableList = FXCollections.observableArrayList(
-            
-    );
-    
+    public static ObservableList<OnlineTable> observableList = FXCollections.observableArrayList();
+
+    public static ObservableList<MiniScoreTable> scoresObservableList = FXCollections.observableArrayList();
+
     private String username;
     public static String opponentName;
-    
-    
 
     public void setUsername(String username) {
         this.username = username;
     }
-    
 
     /**
      * Initializes the controller class.
@@ -85,6 +78,8 @@ public class OnlinePlayerBoardController implements Initializable, OnlinePlayerB
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         //OnlinePlayerBoardController myObj = new OnlinePlayerBoardController();
+        observableList.clear();
+        ServerManager.getInstance().reqOnlineUsers();
         playerColId.setCellValueFactory(new PropertyValueFactory<OnlineTable, String>("username"));
         reqColId.setCellValueFactory(new PropertyValueFactory<OnlineTable, String>("userInGame"));
         setActionListenerToTable();
@@ -92,15 +87,15 @@ public class OnlinePlayerBoardController implements Initializable, OnlinePlayerB
         ServerManager.getInstance().onlinePlayerBoardDelegate = this;
         System.out.println("Hello from init Main Board");
         ServerManager.getInstance().navigationDelegate = this;
-        
-        setupScoretable();  
+
+        setupScoretable();
     }
 
     public String getUsername() {
         return username;
     }
-    
-     public void setActionListenerToTable() {
+
+    public void setActionListenerToTable() {
         tableViewId.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
@@ -117,15 +112,13 @@ public class OnlinePlayerBoardController implements Initializable, OnlinePlayerB
     @Override
     public void showAlert(GameRequest gameRequest) {
         boolean response = Alerts.showRequestAlert(gameRequest.getStartingPlayer(), " wants to play with you");
-        if(response == true)
-        {
+        if (response == true) {
             AcceptancePlayingRequest acceptRequest = new AcceptancePlayingRequest();
             acceptRequest.setPlayer1(gameRequest.getStartingPlayer());
             acceptRequest.setPlayer2(gameRequest.getRecieverPlayer());
             ServerManager.getInstance().AcceptResponse(acceptRequest);
-        }
-        else{
-            
+        } else {
+
         }
     }
 
@@ -141,11 +134,20 @@ public class OnlinePlayerBoardController implements Initializable, OnlinePlayerB
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                public void handle(WindowEvent we) {
+                    System.out.println("User closed from game");
+                    ServerManager.getInstance().logout();
+//                    ServerManager.getInstance().surrenderMsg(new ExitFromGame(ServerManager.username,ServerManager.opponentName , true));
+                    stage.close();
+                }
+
+            });
         } catch (IOException ex) {
             Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @FXML
     public void back(ActionEvent event) throws IOException {
         System.out.println("Logout btn is pressed");
@@ -172,13 +174,11 @@ public class OnlinePlayerBoardController implements Initializable, OnlinePlayerB
             Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void setupScoretable(){
+
+    public void setupScoretable() {
         playerId.setCellValueFactory(new PropertyValueFactory<MiniScoreTable, String>("username"));
         scoresId.setCellValueFactory(new PropertyValueFactory<MiniScoreTable, String>("score"));
         scoresTableview.setItems(scoresObservableList);
     }
-
-
 
 }

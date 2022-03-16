@@ -27,12 +27,12 @@ public class CreatRecordFiles {
         CurrentDateTime currentDateTime = new CurrentDateTime();
 
         if (listType.equals("local-mode")) {
-            File dir = new File("record/savedLocalGame");
+            File dir = new File("C:/record/savedLocalGame");
             dir.mkdirs();
             file = new File(dir, currentDateTime.getCurrentDateTime() + " - " + name);
 
         } else if (listType.equals("online-mode")) {
-            File dir = new File("record/savedOnlineGame");
+            File dir = new File("C:/record/savedOnlineGame");
             dir.mkdirs();
             file = new File(dir, currentDateTime.getCurrentDateTime() + " - " + name);
         }

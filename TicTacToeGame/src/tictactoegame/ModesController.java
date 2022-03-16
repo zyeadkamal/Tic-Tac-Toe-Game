@@ -12,12 +12,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import server.ServerManager;
 
 /**
@@ -25,7 +27,7 @@ import server.ServerManager;
  *
  * @author EmanAbobakr
  */
-public class ModesController implements Initializable{
+public class ModesController implements Initializable {
 
     /**
      * Initializes the controller class.
@@ -61,7 +63,7 @@ public class ModesController implements Initializable{
 
         Thread th = new Thread(new Runnable() {
             public void run() {
-                
+
                 if (ServerManager.getInstance().connectToServer()) {
                     Platform.runLater(new Runnable() {
                         @Override
@@ -73,6 +75,14 @@ public class ModesController implements Initializable{
                                 Scene scene = new Scene(root);
                                 stage.setScene(scene);
                                 stage.show();
+                                stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                                    public void handle(WindowEvent we) {
+                                        System.out.println("User closed from login");
+                                        ServerManager.getInstance().logout();
+                                        stage.close();
+                                    }
+
+                                });
                             } catch (IOException ex) {
                                 System.out.println("ModesController");
                                 Logger.getLogger(ModesController.class.getName()).log(Level.SEVERE, null, ex);
@@ -80,7 +90,7 @@ public class ModesController implements Initializable{
                         }
                     });
 
-                }                       
+                }
             }
         });
         th.start();

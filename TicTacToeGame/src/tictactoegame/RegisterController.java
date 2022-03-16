@@ -29,13 +29,15 @@ import validation.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import interfaces.NavigationInterface;
+import javafx.event.EventHandler;
+import javafx.stage.WindowEvent;
 
 /**
  * FXML Controller class
  *
  * @author EmanAbobakr
  */
-public class RegisterController implements Initializable,NavigationInterface, NavigateToHomeInterface {
+public class RegisterController implements Initializable, NavigationInterface, NavigateToHomeInterface {
 
     private Stage stage;
     private Scene scene;
@@ -61,8 +63,8 @@ public class RegisterController implements Initializable,NavigationInterface, Na
     private Label signupTagId;
 
     SignUpValidation suv;
-    
-    ServerManager sm ;
+
+    ServerManager sm;
     @FXML
     private Button loginId;
 
@@ -76,7 +78,6 @@ public class RegisterController implements Initializable,NavigationInterface, Na
         sm = ServerManager.getInstance();
         sm.delegate = this;
     }
-    
 
     @FXML
     public void switchToLogin(ActionEvent event) throws IOException {
@@ -85,6 +86,14 @@ public class RegisterController implements Initializable,NavigationInterface, Na
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent we) {
+                System.out.println("User closed from login");
+                ServerManager.getInstance().logout();
+                stage.close();
+            }
+
+        });
 
     }
 
@@ -92,14 +101,13 @@ public class RegisterController implements Initializable,NavigationInterface, Na
     public void registerUser(ActionEvent event) throws IOException {
 
         if (suv.emptyUsername(usernameId.getText()) == "" && suv.validateSignUpPassword(passId.getText(), conformPassId.getText()) == "") {
-            
+
             user = new SignUpModel(usernameId.getText(), Integer.parseInt(passId.getText()));
-            
+
             usernameTagId.setVisible(false);
             passwordTagId.setVisible(false);
             sm.registerToServer(user);
-            
-            
+
         } else {
             usernameTagId.setTextFill(Color.RED);
             usernameTagId.setText(suv.emptyUsername(usernameId.getText()));
@@ -115,15 +123,23 @@ public class RegisterController implements Initializable,NavigationInterface, Na
     public void navigateToNext() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-            this.stage=(Stage) usernameId.getScene().getWindow();
+            this.stage = (Stage) usernameId.getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                public void handle(WindowEvent we) {
+                    System.out.println("User closed from login");
+                    ServerManager.getInstance().logout();
+                    stage.close();
+                }
+
+            });
         } catch (IOException ex) {
             Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @FXML
     public void back(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("Modes.fxml"));
@@ -147,8 +163,7 @@ public class RegisterController implements Initializable,NavigationInterface, Na
         } catch (IOException ex) {
             Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
 }
-

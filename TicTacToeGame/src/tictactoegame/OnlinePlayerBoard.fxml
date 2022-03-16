@@ -26,10 +26,10 @@
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="486.0" prefWidth="538.0">
                            <children>
-                              <TableView fx:id="tableViewId" editable="true" layoutX="109.0" layoutY="28.0" prefHeight="382.0" prefWidth="283.0" style="-fx-background-color: ffe77d;">
+                              <TableView fx:id="tableViewId" layoutX="109.0" layoutY="28.0" prefHeight="382.0" prefWidth="283.0" style="-fx-background-color: ffe77d;">
                                  <columns>
-                                    <TableColumn fx:id="playerColId" prefWidth="149.60000610351562" text="Player" />
-                                    <TableColumn fx:id="reqColId" prefWidth="130.39996337890625" text="Send Request" />
+                                    <TableColumn fx:id="playerColId" editable="false" prefWidth="149.60000610351562" text="Player" />
+                                    <TableColumn fx:id="reqColId" editable="false" prefWidth="130.39996337890625" text="Send Request" />
                                  </columns>
                               </TableView>
                            </children>
@@ -40,10 +40,10 @@
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="486.0" prefWidth="538.0">
                            <children>
-                              <TableView fx:id="scoresTableview" editable="true" layoutX="109.0" layoutY="28.0" prefHeight="382.0" prefWidth="283.0" style="-fx-background-color: ffe77d;">
+                              <TableView fx:id="scoresTableview" layoutX="109.0" layoutY="28.0" prefHeight="382.0" prefWidth="283.0" style="-fx-background-color: ffe77d;">
                                  <columns>
-                                    <TableColumn fx:id="playerId" prefWidth="149.60000610351562" text="Player" />
-                                    <TableColumn fx:id="scoresId" prefWidth="130.39996337890625" text="Score" />
+                                    <TableColumn fx:id="playerId" editable="false" prefWidth="149.60000610351562" text="Player" />
+                                    <TableColumn fx:id="scoresId" editable="false" prefWidth="130.39996337890625" text="Score" />
                                  </columns>
                               </TableView>
                            </children>

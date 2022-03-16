@@ -26,7 +26,9 @@ import requests.GameMove;
 import requests.GameResult;
 import server.ServerManager;
 import RecordingHandler.CreatRecordFiles;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.stage.WindowEvent;
 import requests.*;
 
 /**
@@ -132,12 +134,26 @@ public class OnlineModeGameScreenController extends XOGameLogic implements Initi
         isRecorded = false;
         isGameRunning = true;
 
+//        //stage = (Stage) drawLabel.getScene().getWindow();
+//        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+//            public void handle(WindowEvent we) {
+//                System.out.println("User closed from game");
+//                
+//                ServerManager.getInstance().logout();
+//                ServerManager.getInstance().surrenderMsg(new ExitFromGame(ServerManager.username, ServerManager.opponentName, isGameRunning));
+//                isGameRunning = false;
+//                stage.close();
+//            }
+//
+//        });
+
     }
 
     @FXML
     private void historyBtn(ActionEvent event) {
 
         try {
+            ServerManager.getInstance().logout();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("GamesRecordsTable.fxml"));
             root = loader.load();
             GamesRecordsTableController gamesRecordsTableController = loader.getController();
@@ -440,8 +456,9 @@ public class OnlineModeGameScreenController extends XOGameLogic implements Initi
     @FXML
     private void exitGameClicked(ActionEvent event) {
         
+        ServerManager.getInstance().reqOnlineUsers();
         toOnlineBoard();
-        ServerManager.getInstance().surrenderMsg(new ExitFromGame(ServerManager.username,ServerManager.opponentName , isGameRunning));
+        ServerManager.getInstance().surrenderMsg(new ExitFromGame(ServerManager.username, ServerManager.opponentName, isGameRunning));
 
     }
 
@@ -463,4 +480,5 @@ public class OnlineModeGameScreenController extends XOGameLogic implements Initi
             Logger.getLogger(OnlineModeGameScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
 }
